@@ -1,4 +1,4 @@
-# Đại Việt Tinh Tử (ĐVTT) — Hệ thống Phân tích Chu kỳ Vận trình Cá nhân
+# Đại Hồng Việt Tử Vi (ĐVTT) — Hệ thống Phân tích Chu kỳ Vận trình Cá nhân
 
 > **Nguồn chân lý duy nhất (Single Source of Truth)** cho toàn bộ cấu trúc dự án StarPing. Tài liệu này điều hướng luồng phát triển cho cả Kỹ sư phần mềm (Con người) và các Trợ lý lập trình AI (Lovable, Claude Code).
 
@@ -6,7 +6,7 @@
 
 ## 1. TỔNG QUAN DỰ ÁN
 
-**Đại Việt Tinh Tử (ĐVTT)** là nền tảng SaaS phân tích mô hình chu kỳ cá nhân dựa trên hệ thống cổ học phương Đông (Tử Vi Đẩu Số). Hệ thống tự động xử lý dữ liệu đầu vào (Bát Tự), tính toán tinh bàn và gửi các tín hiệu phân tích hàng ngày (**Nhật Vận**) được cá nhân hóa sâu sắc cho từng người dùng thông qua kênh Zalo OA và Email.
+**Đại Hồng Việt Tử Vi (ĐVTT)** là nền tảng SaaS phân tích mô hình chu kỳ cá nhân dựa trên hệ thống cổ học phương Đông (Tử Vi Đẩu Số). Hệ thống tự động xử lý dữ liệu đầu vào (Bát Tự), tính toán tinh bàn và gửi các tín hiệu phân tích hàng ngày (**Nhật Vận**) được cá nhân hóa sâu sắc cho từng người dùng thông qua kênh Zalo OA và Email.
 
 > [!IMPORTANT]
 > **DISCLAIMER PHÁP LÝ (BẮT BUỘC):**

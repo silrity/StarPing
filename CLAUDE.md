@@ -1,4 +1,4 @@
-# Đại Việt Tinh Tử (ĐVTT) — CLAUDE.md
+# ĐVTT — CLAUDE.md
 
 > File này dành cho Claude Code (terminal / VS Code). Đọc toàn bộ trước khi làm bất kỳ task nào.
 
@@ -8,7 +8,8 @@
 
 | Hạng mục | Giá trị |
 |---|---|
-| Tên thương hiệu | **Đại Việt Tinh Tử** (ĐVTT) |
+| Tên thương hiệu (khách hàng) | **Đại Hồng Việt Tử Vi** (ĐHVTV) |
+| Tên project nội bộ | **ĐVTT** / StarPing |
 | Tên thư mục | `StarPing` |
 | PM | Bang (ted.bgn@gmail.com) |
 | Master | Thầy Tử Vi (đối tác nội dung) |
@@ -16,7 +17,7 @@
 | Ngôn ngữ UI | **Tiếng Việt** (mọi nội dung user-facing) |
 | Ngôn ngữ code | English (biến, hàm, schema) |
 
-**Tóm tắt:** ĐVTT là nền tảng SaaS phân tích chu kỳ vận trình cá nhân (Tử Vi đẩu số), gửi tín hiệu hàng ngày (Nhật Vận) cá nhân hóa cho từng người dùng qua Zalo OA và Email.
+**Tóm tắt:** **Đại Hồng Việt Tử Vi** (ĐHVTV) là tên thương hiệu khách hàng. **ĐVTT** là tên project nội bộ. Nền tảng SaaS phân tích chu kỳ vận trình cá nhân (Tử Vi đẩu số), gửi tín hiệu hàng ngày (Nhật Vận) cá nhân hóa cho từng người dùng qua Zalo OA và Email.
 
 ---
 
@@ -272,7 +273,7 @@ created_at TIMESTAMPTZ
 ⚠️ [CẢNH BÁO — chỉ hiển thị nếu có]
 
 ---
-Đại Việt Tinh Tử · Nền tảng phân tích chu kỳ vận trình
+Đại Hồng Việt Tử Vi · Nền tảng phân tích chu kỳ vận trình
 Nội dung mang tính tham khảo, không thay thế tư vấn chuyên môn.
 ```
 
@@ -460,8 +461,9 @@ Giai đoạn MVP: chỉ user được whitelist mới đăng ký được.
 ### Files quan trọng nhất để đọc khi cần context sâu
 - `Product.md` — Full PRD kỹ thuật (schema, API, auth flow, payment)
 - `Ops.md` — IOT spec (internal portal)
-- `demo_laso_tuvi.html` — Thuật toán Tử Vi (demo, cần migrate sang backend)
-- `Chinh tinh.js`, `Phu Tinh.js`, `Phi Tinh.js` — Logic an sao
+- `docs/algorithm/TUVI_ALGORITHM_SPEC.md` — ⭐ SPEC THUẬT TOÁN ĐẦY ĐỦ (source of truth, đọc file này thay vì demo HTML)
+- `docs/demo_laso_tuvi.html` — Code gốc thuật toán (bảo mật, chỉ đọc khi cần verify edge case)
+- `Chinh tinh.js`, `Phu Tinh.js`, `Phi Tinh.js` — Logic an sao module hóa
 
 ---
 

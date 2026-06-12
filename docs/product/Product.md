@@ -25,7 +25,7 @@
 
 ### 1.1. Tầm Nhìn Sản Phẩm
 
-**Đại Việt Tinh Tử** được định vị là một **Nền tảng Hỗ trợ Quyết định (Decision-Support Platform)** dựa trên chu kỳ vận trình cá nhân, hướng tới tệp khách hàng là doanh nhân, nhà quản lý và những người cần định hướng chiến lược.
+**Đại Hồng Việt Tử Vi** được định vị là một **Nền tảng Hỗ trợ Quyết định (Decision-Support Platform)** dựa trên chu kỳ vận trình cá nhân, hướng tới tệp khách hàng là doanh nhân, nhà quản lý và những người cần định hướng chiến lược.
 
 Sản phẩm không dừng lại ở việc "giải lá số một lần" mà hoạt động như một cố vấn ảo: cung cấp tín hiệu hành động mỗi ngày (Nhật Vận) để giúp khách hàng biết "khi nào nên tiến, khi nào nên dừng, và rủi ro nằm ở đâu".
 
@@ -414,7 +414,7 @@ Mỗi ngày lúc **06:00 sáng** (trước giờ gửi 1 tiếng), hệ thống:
 ⚠️ [CẢNH BÁO — chỉ hiển thị nếu có]
 
 ---
-Đại Việt Tinh Tử · Nền tảng phân tích chu kỳ vận trình
+Đại Hồng Việt Tử Vi · Nền tảng phân tích chu kỳ vận trình
 Nội dung mang tính tham khảo, không thay thế tư vấn chuyên môn.
 ```
 

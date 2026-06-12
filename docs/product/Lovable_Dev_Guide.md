@@ -1,5 +1,5 @@
 # HƯỚNG DẪN CHUẨN BỊ & LÀM VIỆC VỚI LOVABLE DEV
-## Đại Việt Tinh Tử — MVP Phase 02
+## Đại Hồng Việt Tử Vi — MVP Phase 02
 
 ---
 
@@ -207,7 +207,7 @@ Mỗi prompt nên theo format:
 
 ```
 ## CONTEXT
-Building "Đại Việt Tinh Tử" — a Vietnamese astrology decision-support SaaS platform.
+Building "Đại Hồng Việt Tử Vi" — a Vietnamese astrology decision-support SaaS platform.
 
 ## TASK
 Set up the base project structure with:
@@ -239,7 +239,7 @@ Landing page: user enters birth info → system calls backend API → displays T
 
 ## TASK
 Build the landing page with:
-1. Hero section: tên thương hiệu "Đại Việt Tinh Tử", tagline "Phân tích chu kỳ vận trình cá nhân"
+1. Hero section: tên thương hiệu "Đại Hồng Việt Tử Vi", tagline "Phân tích chu kỳ vận trình cá nhân"
 2. Birth info form with fields:
    - Họ và tên (text)
    - Giới tính (radio: Nam / Nữ)

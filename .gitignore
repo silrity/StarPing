@@ -24,3 +24,4 @@ out/
 Thumbs.db
 .vscode/
 *.swp
+supabase/.temp/

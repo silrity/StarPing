@@ -1,5 +1,5 @@
 # Internal Operation Tool (IOT)
-## Đại Việt Tinh Tử — Đặc Tả Tính Năng Portal Nội Bộ
+## Đại Hồng Việt Tử Vi — Đặc Tả Tính Năng Portal Nội Bộ
 
 **Phiên bản:** 0.3 (Draft để review — Q&A decisions, Notification System, Coupon, Business Advisory)
 **Ngày tạo:** 11/06/2026
@@ -537,7 +537,7 @@ Notification System gửi email tự động đến khách hàng khi có sự ki
 **Kênh gửi hiện tại:** Email (transactional email — dùng SendGrid / Mailgun / Resend)
 **Kênh tương lai:** Zalo ZNS (khi có Zalo OA Official)
 **Ngôn ngữ email:** Tiếng Việt
-**Sender name:** Đại Việt Tinh Tử | `noreply@[domain]`
+**Sender name:** Đại Hồng Việt Tử Vi | `noreply@[domain]`
 
 ---
 
@@ -566,7 +566,7 @@ Notification System gửi email tự động đến khách hàng khi có sự ki
 #### 3.11.3 Nội Dung Chi Tiết Từng Template
 
 **N01 — Chào mừng / Tạo tài khoản thành công**
-- Chủ đề: `Chào mừng bạn đến với Đại Việt Tinh Tử 🌟`
+- Chủ đề: `Chào mừng bạn đến với Đại Hồng Việt Tử Vi 🌟`
 - Nội dung: Tên khách hàng, thông tin tài khoản (email), link đến dashboard, nhắc xác minh email
 - CTA: "Xác minh email của bạn"
 
@@ -628,7 +628,7 @@ Notification System gửi email tự động đến khách hàng khi có sự ki
 - Không hiển thị lý do chi tiết (chỉ hướng dẫn liên hệ)
 
 **N15 — Đặt lại mật khẩu**
-- Chủ đề: `Yêu cầu đặt lại mật khẩu — Đại Việt Tinh Tử`
+- Chủ đề: `Yêu cầu đặt lại mật khẩu — Đại Hồng Việt Tử Vi`
 - Nội dung: Link reset (hiệu lực 1 giờ)
 - Footer: "Nếu bạn không yêu cầu, hãy bỏ qua email này"
 
@@ -755,7 +755,7 @@ Thất bại      → Không nhận được tiền hoặc hủy giao dịch
 Với đặc thù của ĐVTT — sản phẩm digital/SaaS xây dựng trên hệ thống phân tích độc quyền kết hợp giữa 2 sáng lập viên — mình khuyến nghị chọn **Công ty TNHH 2 thành viên**, vì 4 lý do:
 
 **1. Bảo hộ tài sản trí tuệ vững chắc hơn**
-Tên thương hiệu "Đại Việt Tinh Tử", hệ thống phân tích vận trình, và phần mềm IOT đều là tài sản cốt lõi. Khi đăng ký bản quyền và nhãn hiệu dưới tên pháp nhân công ty, quyền sở hữu được bảo vệ rõ ràng hơn — không phụ thuộc vào 1 cá nhân và tránh tranh chấp nếu sau này có thay đổi nhân sự.
+Tên thương hiệu "Đại Hồng Việt Tử Vi", hệ thống phân tích vận trình, và phần mềm IOT đều là tài sản cốt lõi. Khi đăng ký bản quyền và nhãn hiệu dưới tên pháp nhân công ty, quyền sở hữu được bảo vệ rõ ràng hơn — không phụ thuộc vào 1 cá nhân và tránh tranh chấp nếu sau này có thay đổi nhân sự.
 
 **2. Cơ cấu góp vốn minh bạch giữa 2 sáng lập viên**
 TNHH 2 thành viên cho phép ghi rõ tỷ lệ góp vốn của Bang và Thầy Tử Vi trong điều lệ công ty (VD: 70/30 hoặc thoả thuận khác). Điều này bảo vệ cả hai bên về mặt pháp lý và tránh nhập nhằng sau này.
@@ -780,7 +780,7 @@ Nếu ĐVTT muốn ký hợp đồng với doanh nghiệp (gói Chiến Lược 
 
 1. Thoả thuận và ghi rõ tỷ lệ góp vốn giữa 2 sáng lập viên
 2. Đăng ký tên công ty tại Sở KH&ĐT (kiểm tra tên trước tại cổng thông tin doanh nghiệp quốc gia)
-3. Đăng ký nhãn hiệu "Đại Việt Tinh Tử" / "ĐVTT" tại Cục Sở hữu trí tuệ (NOIP) — nên làm sớm trước khi ra mắt
+3. Đăng ký nhãn hiệu "Đại Hồng Việt Tử Vi" / "ĐVTT" tại Cục Sở hữu trí tuệ (NOIP) — nên làm sớm trước khi ra mắt
 4. Mở tài khoản ngân hàng doanh nghiệp → chuẩn hoá tài khoản nhận thanh toán
 
 ---

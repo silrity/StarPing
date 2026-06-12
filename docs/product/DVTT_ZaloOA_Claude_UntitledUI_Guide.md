@@ -1,6 +1,6 @@
 # HƯỚNG DẪN THIẾT KẾ & VẬN HÀNH
 ## Zalo OA · Claude + Untitled UI
-### Đại Việt Tinh Tử — Tài Liệu Kỹ Thuật & Thiết Kế
+### Đại Hồng Việt Tử Vi — Tài Liệu Kỹ Thuật & Thiết Kế
 
 ---
 
@@ -204,7 +204,7 @@ Họa tiết: constellation pattern mờ, opacity 15%
 Kích thước: 1200×630 px (landscape)
 Layout:
   ┌──────────────────────────────────────────────┐
-  │  ●●● TUẦN [N]/[THÁNG]  ·  Đại Việt Tinh Tử  │
+  │  ●●● TUẦN [N]/[THÁNG]  ·  Đại Hồng Việt Tử Vi  │
   │  ─────────────────────────────────────────── │
   │                                              │
   │  TÍN HIỆU TUẦN NÀY                          │
@@ -229,7 +229,7 @@ Accent color: Gold #C9A227
 Kích thước: 1080×1080 px (vuông) hoặc 1080×1350 px
 Layout:
   ┌──────────────────────────────┐
-  │  Đại Việt Tinh Tử           │
+  │  Đại Hồng Việt Tử Vi           │
   │  ─────────────────           │
   │                              │
   │  BẠN CÓ BIẾT?               │
@@ -311,7 +311,7 @@ Layout:
   │    [Nghề nghiệp, TP]        │
   │                              │
   │  ─────────────────────────── │
-  │  Đại Việt Tinh Tử           │
+  │  Đại Hồng Việt Tử Vi           │
   │  Phân tích chu kỳ vận trình │
   └──────────────────────────────┘
 ```
@@ -391,7 +391,7 @@ Thứ 2:
 □ Ảnh selfie rõ mặt, ánh sáng tốt
 □ Số điện thoại đã có tài khoản Zalo cá nhân
 □ Địa chỉ email
-□ Tên thương hiệu chính thức: "Đại Việt Tinh Tử"
+□ Tên thương hiệu chính thức: "Đại Hồng Việt Tử Vi"
 □ Mô tả ngắn (dưới 150 ký tự):
   "Phân tích chu kỳ vận trình cá nhân — hỗ trợ ra quyết định chiến lược"
 □ Danh mục OA: Tư vấn & Giáo dục / Sức khỏe & Lối sống
@@ -406,7 +406,7 @@ Thứ 2:
 4. Chọn loại: "Doanh nghiệp" hoặc "Cá nhân"
    → Giai đoạn đầu chọn "Cá nhân" (nếu chưa có giấy phép KD)
 5. Điền thông tin:
-   - Tên OA: Đại Việt Tinh Tử
+   - Tên OA: Đại Hồng Việt Tử Vi
    - Danh mục: [Chọn phù hợp nhất]
    - Mô tả: [Câu mô tả đã chuẩn bị]
 6. Upload ảnh đại diện (Avatar đã thiết kế sẵn)
@@ -457,7 +457,7 @@ Thứ 2:
 ### BƯỚC 5 — Vận Hành Tuần Đầu Tiên
 
 ```
-Ngày 1: Đăng bài Introduction — "Đại Việt Tinh Tử là gì?"
+Ngày 1: Đăng bài Introduction — "Đại Hồng Việt Tử Vi là gì?"
 Ngày 2: Chia sẻ OA tới 20 người trong mạng cá nhân
 Ngày 3: Đăng Educational Post đầu tiên
 Ngày 5: Đăng bài "Nhận Hồ Sơ Vận Trình miễn phí"
@@ -997,5 +997,5 @@ File liên quan: [tên component/file nếu biết]
 *Tài liệu này kết hợp với Tài Liệu Đề Xuất Kinh Doanh ĐVTT v1.0.*
 *Cập nhật khi có thay đổi từ Zalo OA policies, tính năng Figma mới, hoặc Lovable.dev updates.*
 
-**Đại Việt Tinh Tử — TinhTử**
+**Đại Hồng Việt Tử Vi — TinhTử**
 *daiviettinh.vn*

@@ -4,8 +4,8 @@
 ---
 
 ```
-Build a Vietnamese astrology decision-support web application called "Đại Việt Tinh Tử"
-(brand: ĐVTT, digital name: TinhTử). This is NOT fortune-telling — it's a personal
+Build a Vietnamese astrology decision-support web application called "Đại Hồng Việt Tử Vi"
+(brand: ĐVTT, digital name: HồngViệt). This is NOT fortune-telling — it's a personal
 cycle-analysis platform using the Tử Vi Đẩu Số system.
 
 ════════════════════════════════════════════
@@ -348,7 +348,7 @@ Form (React Hook Form + Zod):
       Zalo / TikTok / Facebook / Bạn bè giới thiệu / Khác
 
   Checkbox (required):
-    "Tôi đồng ý nhận thông báo phân tích vận trình qua Zalo OA từ Đại Việt Tinh Tử"
+    "Tôi đồng ý nhận thông báo phân tích vận trình qua Zalo OA từ Đại Hồng Việt Tử Vi"
 
   Submit button (gold, full-width): "Hoàn Tất Đăng Ký →"
 
@@ -372,14 +372,14 @@ Content:
   - Large gold checkmark icon (✓)
   - H1 (Cormorant Garamond): "Đăng Ký Thành Công"
   - Body text:
-    "Cảm ơn bạn đã tin tưởng Đại Việt Tinh Tử.
+    "Cảm ơn bạn đã tin tưởng Đại Hồng Việt Tử Vi.
      
      Chúng tôi sẽ liên hệ qua Zalo trong vòng 24 giờ để:
      • Xác nhận thông tin lá số của bạn
      • Hướng dẫn theo dõi Zalo OA để nhận tín hiệu
      • Chia sẻ 3 phân tích đầu tiên miễn phí"
   - Secondary info box (border gold):
-    "Trong khi chờ đợi: tham gia Zalo OA Đại Việt Tinh Tử để nhận các bài chia sẻ hàng ngày"
+    "Trong khi chờ đợi: tham gia Zalo OA Đại Hồng Việt Tử Vi để nhận các bài chia sẻ hàng ngày"
     Button (outline): "Theo Dõi Zalo OA"  [href="#" placeholder]
   - Link: "← Quay về trang chủ"
 

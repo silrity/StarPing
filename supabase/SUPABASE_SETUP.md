@@ -1,4 +1,4 @@
-# SUPABASE BACKEND SETUP — Đại Việt Tinh Tử (ĐVTT)
+# SUPABASE BACKEND SETUP — Đại Hồng Việt Tử Vi (ĐVTT)
 *Tài liệu kỹ thuật để build toàn bộ Backend & Database trên Supabase*
 *Project ID: `gqmjuzpwfpnvlpodqckt` | Cập nhật: 06/2026*
 
@@ -72,19 +72,23 @@ Chạy tuần tự theo thứ tự dưới đây trong **Supabase SQL Editor**.
 ### Migration 001 — Helper Function `updated_at`
 
 ```sql
--- Trigger function tự cập nhật updated_at
 CREATE OR REPLACE FUNCTION public.handle_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $func$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$func$ LANGUAGE plpgsql;
 ```
 
 ---
 
 ### Migration 002 — Bảng `profiles` (extend auth.users)
+
+> ⚠️ Tách thành 4 sub-block riêng để tránh lỗi copy-paste với ký tự `$func$`.  
+> Chạy tuần tự: **2a → 2b → 2c → 2d**.
+
+#### 002a — Tạo bảng `profiles`
 
 ```sql
 CREATE TABLE public.profiles (
@@ -94,19 +98,25 @@ CREATE TABLE public.profiles (
   role          TEXT NOT NULL DEFAULT 'customer'
                 CHECK (role IN ('customer', 'tu_van_vien', 'van_hanh', 'admin')),
   is_active     BOOLEAN NOT NULL DEFAULT TRUE,
-  customer_code TEXT UNIQUE,   -- format: DVTT00101, DVTT00102, ...
+  customer_code TEXT UNIQUE,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+```
 
--- Trigger updated_at
+#### 002b — Trigger `updated_at` cho `profiles`
+
+```sql
 CREATE TRIGGER trg_profiles_updated_at
   BEFORE UPDATE ON public.profiles
   FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+```
 
--- Trigger tự tạo profile khi auth.users mới được tạo
+#### 002c — Auto-tạo profile khi user đăng ký
+
+```sql
 CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $func$
 BEGIN
   INSERT INTO public.profiles (id, full_name, phone_zalo)
   VALUES (
@@ -116,24 +126,27 @@ BEGIN
   );
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$func$ LANGUAGE plpgsql SECURITY DEFINER;
 
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+```
 
--- Auto-increment customer_code bắt đầu từ DVTT00101
+#### 002d — Auto-generate `customer_code` (DVTT00101, DVTT00102, ...)
+
+```sql
 CREATE SEQUENCE IF NOT EXISTS customer_code_seq START 101;
 
 CREATE OR REPLACE FUNCTION public.assign_customer_code()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $func$
 BEGIN
   IF NEW.customer_code IS NULL AND NEW.role = 'customer' THEN
-    NEW.customer_code = 'DVTT' || LPAD(nextval('customer_code_seq')::TEXT, 5, '0');
+    NEW.customer_code := 'DVTT' || LPAD(nextval('customer_code_seq')::TEXT, 5, '0');
   END IF;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$func$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_assign_customer_code
   BEFORE INSERT ON public.profiles
@@ -146,23 +159,40 @@ CREATE TRIGGER trg_assign_customer_code
 
 ```sql
 CREATE TABLE public.user_profiles (
-  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id         UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
-  -- Dương lịch (input từ user)
-  birth_day       INTEGER NOT NULL CHECK (birth_day BETWEEN 1 AND 31),
-  birth_month     INTEGER NOT NULL CHECK (birth_month BETWEEN 1 AND 12),
-  birth_year      INTEGER NOT NULL CHECK (birth_year BETWEEN 1900 AND 2100),
-  birth_hour_chi  INTEGER NOT NULL CHECK (birth_hour_chi BETWEEN 1 AND 12),
-  -- 1=Tý, 2=Sửu, 3=Dần, 4=Mão, 5=Thìn, 6=Tỵ,
-  -- 7=Ngọ, 8=Mùi, 9=Thân, 10=Dậu, 11=Tuất, 12=Hợi
-  gender          TEXT NOT NULL CHECK (gender IN ('male', 'female')),
-  -- Âm lịch (tính toán từ backend, cache lại)
-  lunar_day       INTEGER,
-  lunar_month     INTEGER,
-  lunar_year      INTEGER,
-  is_leap_month   BOOLEAN DEFAULT FALSE,
-  created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id          UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+
+  -- ── DƯƠNG LỊCH (input từ user) ───────────────────────────────
+  birth_day        INTEGER NOT NULL CHECK (birth_day BETWEEN 1 AND 31),
+  birth_month      INTEGER NOT NULL CHECK (birth_month BETWEEN 1 AND 12),
+  birth_year       INTEGER NOT NULL CHECK (birth_year BETWEEN 1900 AND 2100),
+
+  -- Giờ sinh: lưu cả giờ thô (0–23) lẫn địa chi đã map (1–12)
+  -- birth_hour_input: giờ user nhập thực tế, vd 7 = "7 giờ sáng"
+  -- birth_hour_chi:   backend tự map từ birth_hour_input
+  --   Mapping: 23,0→Tý(1) | 1,2→Sửu(2) | 3,4→Dần(3) | 5,6→Mão(4)
+  --            7,8→Thìn(5) | 9,10→Tỵ(6) | 11,12→Ngọ(7) | 13,14→Mùi(8)
+  --            15,16→Thân(9) | 17,18→Dậu(10) | 19,20→Tuất(11) | 21,22→Hợi(12)
+  -- Lưu ý: lunar_hour KHÔNG cần field riêng — trong Tử Vi, giờ âm lịch = birth_hour_chi
+  --        Can giờ (Thiên Can) được tính động từ can ngày, không cần cache.
+  birth_hour_input INTEGER CHECK (birth_hour_input BETWEEN 0 AND 23),
+  birth_hour_chi   INTEGER NOT NULL CHECK (birth_hour_chi BETWEEN 1 AND 12),
+
+  gender           TEXT NOT NULL CHECK (gender IN ('male', 'female')),
+
+  -- ── ÂM LỊCH (backend tính và cache lại khi user lưu Bát Tự) ──
+  -- ⚠️ Hàm solar→lunar có bổ chính GMT+7 (zT = NewMoon + 0.5 + tz/24)
+  --    Khi chạy trên Deno Edge Function (UTC mặc định) BẮT BUỘC giữ nguyên
+  --    đoạn bù múi giờ này, nếu không sẽ tính sai ngày âm lịch.
+  lunar_day        INTEGER,
+  lunar_month      INTEGER,
+  lunar_year       INTEGER,
+  -- is_leap_month: TRUE khi sinh vào tháng nhuận âm lịch (vd "tháng 3 nhuận")
+  -- Hàm solar→lunar trong demo_laso_tuvi.html đã xử lý, trả về field `leap`.
+  is_leap_month    BOOLEAN DEFAULT FALSE,
+
+  created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(user_id)  -- mỗi user chỉ có 1 bộ Bát Tự
 );
 
@@ -465,8 +495,33 @@ CREATE POLICY "system_config: admin write"
     )
   );
 
+-- ── notification_log ─────────────────────────
+CREATE POLICY "notification_log: customer xem của mình"
+  ON public.notification_log FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "notification_log: staff xem tất cả"
+  ON public.notification_log FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.profiles p
+      WHERE p.id = auth.uid()
+      AND p.role IN ('admin', 'van_hanh')
+    )
+  );
+
+-- ── whitelist ─────────────────────────────────
+-- Chỉ admin quản lý whitelist
+CREATE POLICY "whitelist: admin full access"
+  ON public.whitelist FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.profiles p
+      WHERE p.id = auth.uid() AND p.role = 'admin'
+    )
+  );
+
 -- ── audit_log ─────────────────────────────────
--- Chỉ admin đọc
 CREATE POLICY "audit_log: admin only"
   ON public.audit_log FOR SELECT
   USING (
@@ -499,9 +554,9 @@ CREATE POLICY "audit_log: admin only"
 ```sql
 -- Chạy trong SQL Editor — tạo hook để thêm role vào JWT
 CREATE OR REPLACE FUNCTION public.custom_access_token_hook(event JSONB)
-RETURNS JSONB AS $$
+RETURNS JSONB AS $func$
 DECLARE
-  claims JSONB;
+  claims    JSONB;
   user_role TEXT;
 BEGIN
   claims := event->'claims';
@@ -510,11 +565,12 @@ BEGIN
   FROM public.profiles
   WHERE id = (event->>'user_id')::UUID;
 
-  claims := jsonb_set(claims, '{user_role}', to_jsonb(COALESCE(user_role, 'customer')));
+  claims := jsonb_set(claims, '{user_role}',
+              to_jsonb(COALESCE(user_role, 'customer')));
 
   RETURN jsonb_set(event, '{claims}', claims);
 END;
-$$ LANGUAGE plpgsql STABLE;
+$func$ LANGUAGE plpgsql STABLE;
 
 GRANT EXECUTE ON FUNCTION public.custom_access_token_hook TO supabase_auth_admin;
 ```
@@ -528,7 +584,7 @@ Vào **Dashboard → Authentication → Email Templates** và cập nhật:
 **Confirm signup:**
 ```html
 <h2>Xác minh địa chỉ email của bạn</h2>
-<p>Nhấn vào nút bên dưới để xác minh email và kích hoạt tài khoản Đại Việt Tinh Tử.</p>
+<p>Nhấn vào nút bên dưới để xác minh email và kích hoạt tài khoản Đại Hồng Việt Tử Vi.</p>
 <p><a href="{{ .ConfirmationURL }}">Xác Minh Email →</a></p>
 <p><small>Link có hiệu lực trong 24 giờ. Nếu bạn không tạo tài khoản này, vui lòng bỏ qua email này.</small></p>
 ```

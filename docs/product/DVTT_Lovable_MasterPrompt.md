@@ -1,5 +1,5 @@
 # ĐVTT — Lovable.dev Master Prompt
-## Đại Việt Tinh Tử · Full-Stack Web Application
+## Đại Hồng Việt Tử Vi · Full-Stack Web Application
 **Phiên bản 1.0 · Tháng 6/2026**
 
 > **Cách dùng:** Copy toàn bộ Prompt 1 vào Lovable.dev khi tạo project mới.
@@ -11,8 +11,8 @@
 # PROMPT 1 — PROJECT SETUP, DESIGN SYSTEM & LANDING PAGE
 
 ```
-Build a Vietnamese astrology decision-support web application called "Đại Việt Tinh Tử" 
-(short name: TinhTử). This is NOT a fortune-telling app — it's a personal cycle analysis 
+Build a Vietnamese astrology decision-support web application called "Đại Hồng Việt Tử Vi" 
+(short name: HồngViệt). This is NOT a fortune-telling app — it's a personal cycle analysis 
 platform that helps users make better decisions based on the Tử Vi Đẩu Số system.
 
 ## CRITICAL LANGUAGE RULE
@@ -196,7 +196,7 @@ Admins (role: 'admin') can read all data.
 Build a modern, dark-themed landing page. All text in Vietnamese.
 
 **Navigation bar (sticky):**
-- Logo: "Đại Việt Tinh Tử ★" — left side, text in dvtt-gold
+- Logo: "Đại Hồng Việt Tử Vi ★" — left side, text in dvtt-gold
 - Nav links: Giới Thiệu | Dịch Vụ | Lá Số | Bảng Giá
 - CTA button: "Bắt Đầu Miễn Phí" — dvtt-gold button, right side
 - Mobile: hamburger menu
@@ -388,7 +388,7 @@ Build this now. Start with the landing page and auth pages, then the dashboard s
 # PROMPT 2 — ADMIN / INTERNAL OPS PANEL
 
 ```
-Add an admin panel to the Đại Việt Tinh Tử application.
+Add an admin panel to the Đại Hồng Việt Tử Vi application.
 This is an internal tool for the product operations team (PM + Master).
 
 ## ADMIN ROUTES
@@ -617,7 +617,7 @@ Send realtime notification to the user's dashboard.
 # PROMPT 4 — DAILY SIGNAL SYSTEM
 
 ```
-Implement the daily signal system for Đại Việt Tinh Tử.
+Implement the daily signal system for Đại Hồng Việt Tử Vi.
 
 ## OVERVIEW
 Each user with a computed lá số receives a personalized daily signal based on their 
