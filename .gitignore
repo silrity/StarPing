@@ -1,0 +1,26 @@
+# Personal data & confidential documents
+*.docx
+*.zip
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+supabase/.env
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# OS & editor
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
