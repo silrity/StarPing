@@ -137,24 +137,24 @@ serve(async (req) => {
     if (dispatchErr) throw new Error('dispatch_log: ' + dispatchErr.message)
     const dispatchId = dispatch.id
 
-    // 2. Eligible users: active subscription + email verified
-    const { data: users, error: usersErr } = await admin
-      .from('users')
-      .select(`
-        id, email, full_name,
-        user_profiles ( gender ),
-        user_charts ( chi_nam ),
-        subscriptions ( status )
-      `)
-      .eq('email_verified', true)
-      .eq('is_active', true)
+    // 2. Eligible users: separate queries to avoid nested-select FK requirements
+    const [usersRes, subsRes, profilesRes, chartsRes] = await Promise.all([
+      admin.from('users').select('id, email, full_name').eq('email_verified', true).eq('is_active', true),
+      admin.from('subscriptions').select('user_id, status').in('status', ['trial', 'active']),
+      admin.from('user_profiles').select('user_id, gender'),
+      admin.from('user_charts').select('user_id, chi_nam'),
+    ])
 
-    if (usersErr) throw new Error('users: ' + usersErr.message)
+    if (usersRes.error)    throw new Error('users: '    + usersRes.error.message)
+    if (subsRes.error)     throw new Error('subs: '     + subsRes.error.message)
+    if (profilesRes.error) throw new Error('profiles: ' + profilesRes.error.message)
+    if (chartsRes.error)   throw new Error('charts: '   + chartsRes.error.message)
 
-    const eligible = (users ?? []).filter((u: any) => {
-      const sub = Array.isArray(u.subscriptions) ? u.subscriptions[0] : u.subscriptions
-      return sub && ['trial', 'active'].includes(sub.status)
-    })
+    const activeSubs    = new Set((subsRes.data ?? []).map((s: any) => s.user_id))
+    const profileByUser = Object.fromEntries((profilesRes.data ?? []).map((p: any) => [p.user_id, p]))
+    const chartByUser   = Object.fromEntries((chartsRes.data ?? []).map((c: any) => [c.user_id, c]))
+
+    const eligible = (usersRes.data ?? []).filter((u: any) => activeSubs.has(u.id))
 
     let totalSent   = 0
     let totalFailed = 0
@@ -163,8 +163,8 @@ serve(async (req) => {
     // 3. Process each user
     for (const user of eligible) {
       try {
-        const profile = Array.isArray(user.user_profiles) ? user.user_profiles[0] : user.user_profiles
-        const chart   = Array.isArray(user.user_charts)   ? user.user_charts[0]   : user.user_charts
+        const profile = profileByUser[user.id]
+        const chart   = chartByUser[user.id]
 
         if (!profile || !chart?.chi_nam) {
           errors.push(`user ${user.id}: thiếu profile/chart`)
