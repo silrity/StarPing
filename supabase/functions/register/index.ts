@@ -198,7 +198,11 @@ serve(async (req) => {
         'Content-Type': 'application/json',
         'apikey': SUPABASE_ANON_KEY,
       },
-      body: JSON.stringify({ type: 'signup', email }),
+      body: JSON.stringify({
+        type: 'signup',
+        email,
+        options: { emailRedirectTo: 'https://tuvidaihongviet.lovable.app/dang-nhap' },
+      }),
     }).catch((e: Error) => {
       console.error('[register] resend confirm fetch error:', e.message)
       return null
