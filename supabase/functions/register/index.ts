@@ -188,29 +188,82 @@ serve(async (req) => {
       console.error('[register] Failed to compute chart for', userId, lasoErr)
     }
 
-    // ── Gửi email xác nhận qua Supabase Auth mailer ──
-    // Dùng /auth/v1/resend thay vì Resend — gửi được cho bất kỳ email nào
-    // mà không cần verified domain. Template tuỳ chỉnh trong:
-    // Supabase Dashboard → Authentication → Email Templates → "Confirm signup"
-    const confirmRes = await fetch(`${SUPABASE_URL}/auth/v1/resend`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-      },
-      body: JSON.stringify({
-        type: 'signup',
-        email,
-        options: { emailRedirectTo: 'https://tuvidaihongviet.lovable.app/dang-nhap' },
-      }),
-    }).catch((e: Error) => {
-      console.error('[register] resend confirm fetch error:', e.message)
-      return null
+    // ── Gửi email xác nhận qua Resend ──
+    // generateLink trả về URL xác nhận, sau đó gửi qua Resend API.
+    // Supabase built-in mailer bị rate-limit 2 email/giờ (free tier) → không dùng.
+    // ⚠️ Resend sandbox (onboarding@resend.dev) chỉ deliver đến email chủ tài khoản Resend.
+    //    Khi có domain verify → đổi EMAIL_FROM env var là xong, không cần sửa code.
+    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY') ?? ''
+    const EMAIL_FROM     = Deno.env.get('EMAIL_FROM') ?? 'Đại Hồng Việt Tử Vi <onboarding@resend.dev>'
+
+    const { data: linkData, error: linkErr } = await admin.auth.admin.generateLink({
+      type: 'signup',
+      email,
+      options: { redirectTo: 'https://tuvidaihongviet.lovable.app/dang-nhap' },
     })
 
-    if (confirmRes && !confirmRes.ok) {
-      const txt = await confirmRes.text().catch(() => '')
-      console.warn('[register] resend confirm failed:', confirmRes.status, txt)
+    if (linkErr) {
+      console.warn('[register] generateLink failed:', linkErr.message)
+    } else if (!RESEND_API_KEY) {
+      console.warn('[register] RESEND_API_KEY not set — confirmation email NOT sent for', email)
+    } else {
+      const confirmUrl = linkData.properties.action_link
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from:    EMAIL_FROM,
+          to:      [email],
+          subject: '[Đại Hồng Việt Tử Vi] Xác nhận tài khoản của bạn',
+          html: `<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:24px 16px;background:#0a1420;font-family:Arial,sans-serif;">
+<div style="max-width:520px;margin:0 auto;background:#0F1B2D;border-radius:8px;border:1px solid rgba(201,162,39,0.15);overflow:hidden;">
+  <div style="padding:28px 32px 20px;border-bottom:1px solid rgba(201,162,39,0.15);">
+    <p style="margin:0 0 4px;font-size:11px;color:#5A7A9A;letter-spacing:2px;text-transform:uppercase;">Đại Hồng Việt Tử Vi</p>
+    <h1 style="margin:0;font-size:20px;font-weight:700;color:#C9A227;">Xác nhận tài khoản</h1>
+  </div>
+  <div style="padding:28px 32px;">
+    <p style="margin:0 0 16px;font-size:14px;line-height:1.8;color:#D4D0C8;">
+      Cảm ơn <strong style="color:#F4F1EC;">${full_name}</strong> đã đăng ký <strong style="color:#F4F1EC;">Đại Hồng Việt Tử Vi</strong>.
+    </p>
+    <p style="margin:0 0 28px;font-size:14px;line-height:1.8;color:#D4D0C8;">
+      Để kích hoạt tài khoản và bắt đầu nhận phân tích chu kỳ vận trình hàng ngày, vui lòng xác nhận địa chỉ email của bạn:
+    </p>
+    <div style="text-align:center;margin:0 0 28px;">
+      <a href="${confirmUrl}" style="display:inline-block;background:#C9A227;color:#0F1B2D;padding:14px 40px;border-radius:6px;font-size:15px;font-weight:700;text-decoration:none;">
+        Xác Nhận Email
+      </a>
+    </div>
+    <p style="margin:0 0 16px;font-size:13px;line-height:1.7;color:#7A8FA5;">
+      Link có hiệu lực trong <strong style="color:#9AA8B5;">24 giờ</strong>.<br>
+      Sau khi xác nhận, bạn sẽ nhận bản luận đoán Nhật Vận đầu tiên vào <strong style="color:#9AA8B5;">07:00 sáng ngày mai</strong>.
+    </p>
+    <p style="margin:0;font-size:12px;line-height:1.7;color:#5A7A9A;">
+      Nếu bạn không thực hiện đăng ký này, hãy bỏ qua email. Tài khoản sẽ không được kích hoạt.
+    </p>
+  </div>
+  <div style="padding:16px 32px 24px;border-top:1px solid rgba(244,241,236,0.07);">
+    <p style="margin:0;font-size:11px;line-height:1.8;color:#5A7A9A;">
+      Nội dung mang tính tham khảo, hỗ trợ định hướng quyết định dựa trên hệ thống phân tích chu kỳ cổ học.
+      Không thay thế tư vấn chuyên môn về pháp lý, y tế, hoặc tài chính.<br>
+      <strong style="color:#C9A227;">Đại Hồng Việt Tử Vi</strong>
+    </p>
+  </div>
+</div>
+</body>
+</html>`,
+        }),
+      }).catch((e: Error) => {
+        console.error('[register] Resend fetch error:', e.message)
+        return null
+      })
+
+      if (resendRes && !resendRes.ok) {
+        const txt = await resendRes.text().catch(() => '')
+        console.warn('[register] Resend send failed:', resendRes.status, txt)
+      }
     }
 
     return new Response(
