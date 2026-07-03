@@ -179,7 +179,7 @@ Sau khi đã định vị được Cung Mệnh, 11 cung còn lại sẽ được
 
     Thiên Tướng: Dương Thủy
 
-    Thiên Lương: Âm Mộc (đới Thổ)
+    Thiên Lương: Dương Mộc (đới Thổ)
 
     Thất Sát: Dương Kim (đới Hỏa)
 
@@ -201,9 +201,9 @@ Sau khi đã định vị được Cung Mệnh, 11 cung còn lại sẽ được
 
 3. Lục Cát & Lục Sát Tinh
 
-    Văn Xương: Âm Kim (đới Thổ) | Văn Khúc: Âm Thủy
+    Văn Xương: Âm Kim (đới Thổ) | Văn Khúc: Âm Thủy (đới Hỏa)
 
-    Tả Phù: Dương Thổ | Hữu Bật: Âm Thổ
+    Tả Phù: Dương Thổ (đới Kim) | Hữu Bật: Âm Thổ (đới Thủy)
 
     Thiên Khôi: Dương Hỏa (đới Kim) | Thiên Việt: Âm Hỏa (đới Mộc)
 
@@ -338,3 +338,107 @@ PHẦN 5: LÝ THUYẾT AN HỆ THỐNG PHỤ TINH
     Tuần Trung: Một vòng Hoa Giáp (10 Can) ghép với 12 Chi sẽ dư ra 2 Chi cuối. Hai cung chứa 2 Chi này sẽ bị Tuần Không.
 
     Triệt Lộ: An theo Thiên Can năm sinh, chặn đứng ở ranh giới giữa 2 cung (Giáp/Kỷ chặn Thân-Dậu; Ất/Canh chặn Ngọ-Mùi...).
+
+---
+
+# PHẦN BỔ SUNG: MA TRẬN TOÁN HỌC CHO CÁC SAO CỐ ĐỊNH 
+*(Dữ liệu bắt buộc để Developer / AI có thể lập trình)*
+
+### 1. BẢNG MA TRẬN THEO THIÊN CAN NĂM SINH (Index 1=Giáp ... 10=Quý)
+
+**A. Tứ Hóa (Lộc - Quyền - Khoa - Kỵ)**
+Bám vào các sao theo thứ tự 10 Can:
+* 1 (Giáp): Liêm Trinh, Phá Quân, Vũ Khúc, Thái Dương
+* 2 (Ất): Thiên Cơ, Thiên Lương, Tử Vi, Thái Âm
+* 3 (Bính): Thiên Đồng, Thiên Cơ, Văn Xương, Liêm Trinh
+* 4 (Đinh): Thái Âm, Thiên Đồng, Thiên Cơ, Cự Môn
+* 5 (Mậu): Tham Lang, Thái Âm, Hữu Bật, Thiên Cơ
+* 6 (Kỷ): Vũ Khúc, Tham Lang, Thiên Lương, Văn Khúc
+* 7 (Canh): Thái Dương, Vũ Khúc, Thái Âm, Thiên Đồng
+* 8 (Tân): Cự Môn, Thái Dương, Văn Khúc, Văn Xương
+* 9 (Nhâm): Thiên Lương, Tử Vi, Thiên Phủ, Vũ Khúc
+* 10 (Quý): Phá Quân, Cự Môn, Thái Âm, Tham Lang
+
+**B. Thiên Khôi - Thiên Việt (Tính bằng số thứ tự cung 1=Tý... 12=Hợi)**
+* Khôi: [-, 2, 1, 12, 10, 8, 1, 8, 7, 6, 4] 
+* Việt: [-, 8, 9, 10, 12, 2, 9, 2, 3, 4, 6]
+
+**C. Thiên Quan - Thiên Phúc - Thiên Trù**
+* **Thiên Quan:** Giáp(8), Ất(5), Bính(6), Đinh(3), Mậu(4), Kỷ(10), Canh(12), Tân(10), Nhâm(11), Quý(7).
+* **Thiên Phúc:** Giáp(10), Ất(9), Bính(1), Đinh(12), Mậu(4), Kỷ(3), Canh(7), Tân(6), Nhâm(7), Quý(6).
+* **Thiên Trù:** Giáp(6), Ất(7), Bính(1), Đinh(6), Mậu(7), Kỷ(9), Canh(3), Tân(7), Nhâm(10), Quý(11).
+
+**D. Lưu Hà cố định:** Giáp(10), Ất(11), Bính(8), Đinh(9), Mậu(6), Kỷ(7), Canh(4), Tân(5), Nhâm(12), Quý(1).
+
+---
+
+### 2. LUẬT AN THEO ĐỊA CHI NĂM SINH (Index 1=Tý... 12=Hợi)
+
+* **Thiên Không:** Luôn luôn nằm ngay sát trước sao Thái Tuế (Đồng cung với Thiếu Dương). Khởi từ Thái Tuế đếm thuận 1 cung.
+* **Kiếp Sát:** Dần/Ngọ/Tuất ở Hợi(12); Thân/Tý/Thìn ở Tỵ(6); Tỵ/Dậu/Sửu ở Dần(3); Hợi/Mão/Mùi ở Thân(9).
+* **Hoa Cái:** Dần/Ngọ/Tuất ở Tuất(11); Thân/Tý/Thìn ở Thìn(5); Tỵ/Dậu/Sửu ở Sửu(2); Hợi/Mão/Mùi ở Mùi(8).
+* **Phá Toái:** Tý/Ngọ/Mão/Dậu ở Tỵ(6); Dần/Thân/Tỵ/Hợi ở Dậu(10); Thìn/Tuất/Sửu/Mùi ở Sửu(2).
+* **Đường Phù:** Tý(8), Sửu(9), Dần(10), Mão(11), Thìn(12), Tỵ(1), Ngọ(2), Mùi(3), Thân(4), Dậu(5), Tuất(6), Hợi(7).
+* **Thiên Đức:** Khởi cung Dậu(10) là năm Tý, đếm thuận đến Chi năm sinh.
+* **Nguyệt Đức:** Khởi cung Tỵ(6) là năm Tý, đếm thuận đến Chi năm sinh.
+
+---
+
+### 3. TỌA ĐỘ KHỞI HỎA TINH - LINH TINH (Giờ Tý)
+
+Thuật toán Hỏa - Linh cần xác định cung Khởi (Giờ Tý) dựa vào Tam hợp Chi năm sinh:
+* **Dần/Ngọ/Tuất:** Hỏa khởi Sửu(2) — Linh khởi Mão(4).
+* **Thân/Tý/Thìn:** Hỏa khởi Dần(3) — Linh khởi Tuất(11).
+* **Tỵ/Dậu/Sửu:** Hỏa khởi Mão(4) — Linh khởi Tuất(11).
+* **Hợi/Mão/Mùi:** Hỏa khởi Dậu(10) — Linh khởi Tuất(11).
+* *Chiều an:* Dương Nam/Âm Nữ đếm THUẬN từ cung Khởi đến Giờ sinh. Âm Nam/Dương Nữ đếm NGHỊCH từ cung Khởi đến Giờ sinh.
+
+---
+
+### 4. MA TRẬN TOÁN HỌC CHO SAO QUỐC ẤN VÀ CÁC SAO PHỤ THUỘC (Tháng/Ngày/Giờ/Mệnh)
+
+**A. Nhóm Sao An Theo Thiên Can (Bổ sung)**
+* **Quốc Ấn (Âm Thổ):** Luôn luôn đi trước sao Lộc Tồn 8 cung (đếm Lộc Tồn là 1 thì Quốc Ấn là 9).
+  * Công thức: `posQuocAn = dich(posLocTon, 8)`
+
+**B. Nhóm Sao An Theo Tháng Sinh (Index Tháng: 1=Giêng... 12=Chạp)**
+* **Tả Phù / Hữu Bật:**
+  * Tả Phù: `dich(5, thang - 1)` (Khởi Thìn đi thuận)
+  * Hữu Bật: `dich(11, -(thang - 1))` (Khởi Tuất đi nghịch)
+* **Thiên Y / Thiên Riêu / Thiên Hình:**
+  * Thiên Y & Thiên Riêu (Luôn đồng cung): `dich(2, thang - 1)` (Khởi Sửu đi thuận)
+  * Thiên Hình: `dich(10, thang - 1)` (Khởi Dậu đi thuận)
+* **Thiên Giải / Địa Giải:**
+  * Thiên Giải: `dich(9, thang - 1)` (Khởi Thân đi thuận)
+  * Địa Giải: `dich(8, thang - 1)` (Khởi Mùi đi thuận)
+
+**C. Nhóm Sao An Theo Giờ Sinh (Index Giờ: 1=Tý... 12=Hợi)**
+* **Văn Khúc / Văn Xương:**
+  * Văn Khúc: `dich(5, gio - 1)` (Khởi Thìn đi thuận)
+  * Văn Xương: `dich(11, -(gio - 1))` (Khởi Tuất đi nghịch)
+* **Thai Phụ / Phong Cáo:** (Phụ thuộc vào vị trí Văn Khúc)
+  * Thai Phụ: `dich(posVanKhuc, 2)` (Văn Khúc tiến 2 cung)
+  * Phong Cáo: `dich(posVanKhuc, -2)` (Văn Khúc lùi 2 cung)
+* **Địa Không / Địa Kiếp:**
+  * Địa Kiếp: `dich(12, gio - 1)` (Khởi Hợi đi thuận)
+  * Địa Không: `dich(12, -(gio - 1))` (Khởi Hợi đi nghịch)
+
+**D. Nhóm Sao An Theo Ngày Sinh (Index Ngày: 1 đến 30)**
+* **Tam Thai / Bát Tọa:** (Phụ thuộc Tả/Hữu)
+  * Tam Thai: `dich(posTaPhu, ngay - 1)` (Từ Tả Phù đi thuận)
+  * Bát Tọa: `dich(posHuuBat, -(ngay - 1))` (Từ Hữu Bật đi nghịch)
+* **Ân Quang / Thiên Quý:** (Phụ thuộc Xương/Khúc và lùi lại 1 cung = trừ 2)
+  * Ân Quang: `dich(posVanXuong, ngay - 2)` (Từ Văn Xương đi thuận đến ngày sinh, lùi 1)
+  * Thiên Quý: `dich(posVanKhuc, -(ngay - 2))` (Từ Văn Khúc đi nghịch đến ngày sinh, lùi 1)
+
+**E. Nhóm Cố Định & Phụ Thuộc Mệnh/Thân/Thái Tuế**
+* **Thiên La / Địa Võng (Cố định):**
+  * Thiên La luôn ở Thìn (Index: 5). Địa Võng luôn ở Tuất (Index: 11).
+* **Thiên Thương / Thiên Sứ:**
+  * Thiên Thương (Nô Bộc): `dich(posMenh, 5)`
+  * Thiên Sứ (Tật Ách): `dich(posMenh, 7)`
+* **Thiên Tài / Thiên Thọ:**
+  * Thiên Tài: `dich(posMenh, chiNam - 1)` (Từ Mệnh đi thuận theo Địa chi năm sinh)
+  * Thiên Thọ: `dich(posThan, chiNam - 1)` (Từ Thân đi thuận theo Địa chi năm sinh)
+* **Đẩu Quân:**
+  * Công thức gộp: `dich(chiNam, -(thang - 1), gio - 1)` (Từ Thái Tuế đi nghịch đến Tháng, rồi đi thuận đến Giờ).

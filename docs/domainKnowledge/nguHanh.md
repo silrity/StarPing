@@ -12,7 +12,7 @@ const NGU_HANH_SAO = {
     // 14 Chính Tinh
     'Tử Vi':'Âm Thổ', 'Thiên Cơ':'Âm Mộc', 'Thái Dương':'Dương Hỏa', 'Vũ Khúc':'Âm Kim', 'Thiên Đồng':'Dương Thủy', 
     'Liêm Trinh':'Âm Hỏa (đới Mộc)', 'Thiên Phủ':'Dương Thổ', 'Thái Âm':'Âm Thủy', 'Tham Lang':'Âm Thủy (đới Mộc)', 
-    'Cự Môn':'Âm Thủy (đới Kim)', 'Thiên Tướng':'Dương Thủy', 'Thiên Lương':'Âm Mộc (đới Thổ)', 
+    'Cự Môn':'Âm Thủy (đới Kim)', 'Thiên Tướng':'Dương Thủy', 'Thiên Lương':'Dương Mộc (đới Thổ)', 
     'Thất Sát':'Dương Kim (đới Hỏa)', 'Phá Quân':'Âm Thủy (đới Kim)',
     
     // Tứ Hóa
@@ -23,7 +23,7 @@ const NGU_HANH_SAO = {
     'L.Tuần':'Âm Hỏa (đới Thủy)', 'L.Triệt':'Dương Kim (đới Thủy)',
     
     // Lục Cát & Lục Sát
-    'Văn Xương':'Âm Kim (đới Thổ)', 'Văn Khúc':'Âm Thủy', 'Tả Phù':'Dương Thổ', 'Hữu Bật':'Âm Thổ', 
+    'Văn Xương':'Âm Kim (đới Thổ)', 'Văn Khúc':'Âm Thủy (đới Hỏa)', 'Tả Phù':'Dương Thổ (đới Kim)', 'Hữu Bật':'Âm Thổ (đới Thủy)', 
     'Thiên Khôi':'Dương Hỏa (đới Kim)', 'Thiên Việt':'Âm Hỏa (đới Mộc)',
     'Kình Dương':'Dương Kim (đới Hỏa)', 'Đà La':'Âm Kim (đới Hỏa)', 'Hỏa Tinh':'Dương Hỏa', 'Linh Tinh':'Âm Hỏa', 
     'Địa Không':'Âm Hỏa', 'Địa Kiếp':'Dương Hỏa',
