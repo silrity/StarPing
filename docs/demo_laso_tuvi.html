@@ -288,14 +288,15 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
   background: rgba(201,162,39,.06);
   box-shadow: inset 0 0 10px rgba(201,162,39,.05);
 }
-.palace.p-than  { border-color: var(--teal); background: rgba(26,188,156,.04); }
 .palace.p-both  { border-color: var(--gold); border-width: 2px; background: rgba(201,162,39,.08); }
 
-/* Palace header */
+/* Palace header — grid 3 cột để tên cung LUÔN canh giữa thật (khớp trang live),
+   không lệch theo độ dài chữ Can-Chi / Đại Hạn hai bên như flex space-between */
 .p-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  gap: 4px;
   margin-bottom: 2px;
 }
 /* Thiên Can + Địa Chi của cung (ngũ hổ độn niên) */
@@ -581,24 +582,25 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
   white-space: normal;
   overflow-wrap: break-word;
 }
-/* 14 Chính tinh */
+/* 14 Chính tinh — layout dọc: tên sao 1 hàng, Miếu/Vượng/Hãm... chữ nhỏ mờ nghiêng
+   ngay dưới (khớp trang live — KHÔNG dùng badge chữ cái tô màu như trước) */
 .star.s-chinh {
   font-size: 11px;
   font-weight: 600;
   color: var(--gold-lt);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
 }
-.star.s-chinh .state {
+.chinh-col-right .star.s-chinh { align-items: flex-end; text-align: right; }
+.chinh-name-row { display: flex; align-items: baseline; gap: 2px; flex-wrap: wrap; }
+.chinh-state {
   font-size: 7.5px;
-  padding: 0px 3px;
-  border-radius: 2px;
-  font-weight: 700;
-  line-height: 1.4;
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(244,241,236,.45);
+  line-height: 1.2;
 }
-.state-M { background: rgba(46,204,113,.25);  color: #2ECC71; }
-.state-V { background: rgba(52,152,219,.25);  color: #5DADE2; }
-.state-D { background: rgba(155,89,182,.2);   color: #BB8FCE; }
-.state-B { background: rgba(127,140,141,.2);  color: var(--muted); }
-.state-H { background: rgba(192,57,43,.2);    color: #EC7063; }
 
 /* Tứ hóa */
 .star.s-loc  { color: var(--success);  font-weight: 600; font-size: 10px; }
@@ -673,13 +675,16 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
 .ci-lbl { font-size: 7.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; }
 .ci-val { font-size: 10px; font-weight: 600; color: var(--off); text-align: right; }
 .ci-green { color: #27AE60 !important; }
+.ci-gold  { color: var(--gold-lt) !important; }
+.ci-teal  { color: var(--teal) !important; }
 .ci-sep { width: 100%; height: 1px; background: rgba(255,255,255,.06); margin: 2px 0; }
 /* Tứ Trụ grid in center box */
 .tu-tru-grid { display: flex; width: 100%; gap: 4px; justify-content: space-around; margin: 2px 0; }
-.tt-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; }
+.tt-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; min-width: 0; }
 .tt-hdr { font-size: 6.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
 .tt-can { font-size: 12px; font-weight: 700; color: var(--off); line-height: 1.1; }
 .tt-chi { font-size: 12px; font-weight: 700; color: var(--gold); line-height: 1.1; }
+.tt-napam { font-size: 7px; font-weight: 600; line-height: 1.15; text-align: center; word-break: break-word; margin-top: 1px; }
 
 /* Legend */
 .legend {
@@ -824,17 +829,27 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
   .palace { min-height: 90px; padding: 5px; }
   .star.s-chinh { font-size: 9.5px; }
   .star { font-size: 8.5px; }
+  .chinh-state { font-size: 7px; }
+  .center-box { padding: 14px 8px; gap: 4px; }
   .cta-card { flex-direction: column; }
 }
 /* Điện thoại nhỏ (iPhone SE, Android compact ~360-400px) — thu nhỏ thêm để
-   lá số vừa màn hình mà không cần vuốt ngang */
+   lá số vừa màn hình mà không cần vuốt ngang. 412px (Google Pixel 7 Pro) rơi
+   vào breakpoint này. */
 @media (max-width: 420px) {
   .laso-grid { min-width: 300px; gap: 3px; }
   .palace { min-height: 82px; padding: 4px; }
   .star { font-size: 8px; gap: 2px; }
   .star.s-chinh { font-size: 9px; }
+  .chinh-state { font-size: 6.5px; }
   .p-name { font-size: 9.5px; }
   .p-canchi { font-size: 9px; }
+  .center-box { padding: 10px 6px; gap: 3px; }
+  .center-name { font-size: 14px; }
+  .ci-lbl { font-size: 7px; }
+  .ci-val { font-size: 9px; }
+  .tt-can, .tt-chi { font-size: 10.5px; }
+  .tt-napam { font-size: 6.5px; }
 }
 </style>
 </head>
@@ -932,10 +947,9 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
       <div class="leg-item"><div class="leg-dot" style="background:var(--dim)"></div>Phi tinh khác</div>
       <div class="leg-item"><div class="leg-dot" style="background:#27AE60"></div>Lưu Năm</div>
       <div class="leg-item"><div class="leg-dot" style="background:#1ABC9C"></div>Lưu Tháng</div>
-      <div class="leg-item" style="gap:6px">
-        <span style="font-size:8px;background:rgba(46,204,113,.25);color:#2ECC71;padding:1px 4px;border-radius:2px;">M</span>Miếu&nbsp;
-        <span style="font-size:8px;background:rgba(52,152,219,.25);color:#5DADE2;padding:1px 4px;border-radius:2px;">V</span>Vượng&nbsp;
-        <span style="font-size:8px;background:rgba(192,57,43,.2);color:#EC7063;padding:1px 4px;border-radius:2px;">H</span>Hãm
+      <div class="leg-item" style="gap:4px">
+        <span style="font-style:italic;color:rgba(244,241,236,.45)">Miếu/Vượng/Đắc/Bình/Hãm</span>
+        <span style="color:var(--muted)">— chữ nhỏ nghiêng dưới chính tinh</span>
       </div>
     </div>
   </div>
@@ -1164,6 +1178,34 @@ const NGU_HANH_SAO = {
 const HANH_CLASS = {'Kim':'kim','Mộc':'moc','Thủy':'thuy','Hỏa':'hoa','Thổ':'tho'};
 const CUNG = ['','Mệnh','Phụ Mẫu','Phúc Đức','Điền Trạch','Quan Lộc',
               'Nô Bộc','Thiên Di','Tật Ách','Tài Bạch','Tử Tức','Phu Thê','Huynh Đệ'];
+
+// ── Nạp Âm Lục Thập Hoa Giáp — dùng cho ô Tứ Trụ ở trung tâm (khớp trang live) ──
+const NGU_HANH_COLOR = {'Mộc':'#4ED07A','Hỏa':'#E89B92','Thổ':'#E0B84A','Kim':'#E5E7EB','Thủy':'#60A5FA'};
+// Can (1-10 = Giáp..Quý) / Chi (1-12 = Tý..Hợi) → ngũ hành bản thân, để tô màu chữ Can/Chi
+const CAN_HANH = {1:'Mộc',2:'Mộc',3:'Hỏa',4:'Hỏa',5:'Thổ',6:'Thổ',7:'Kim',8:'Kim',9:'Thủy',10:'Thủy'};
+const CHI_HANH = {1:'Thủy',12:'Thủy',2:'Thổ',5:'Thổ',8:'Thổ',11:'Thổ',3:'Mộc',4:'Mộc',6:'Hỏa',7:'Hỏa',9:'Kim',10:'Kim'};
+const NAP_AM_60 = [
+  "Hải Trung Kim","Hải Trung Kim","Lư Trung Hỏa","Lư Trung Hỏa","Đại Lâm Mộc","Đại Lâm Mộc",
+  "Lộ Bàng Thổ","Lộ Bàng Thổ","Kiếm Phong Kim","Kiếm Phong Kim","Sơn Đầu Hỏa","Sơn Đầu Hỏa",
+  "Giản Hạ Thủy","Giản Hạ Thủy","Thành Đầu Thổ","Thành Đầu Thổ","Bạch Lạp Kim","Bạch Lạp Kim",
+  "Dương Liễu Mộc","Dương Liễu Mộc","Tuyền Trung Thủy","Tuyền Trung Thủy","Ốc Thượng Thổ","Ốc Thượng Thổ",
+  "Tích Lịch Hỏa","Tích Lịch Hỏa","Tùng Bách Mộc","Tùng Bách Mộc","Trường Lưu Thủy","Trường Lưu Thủy",
+  "Sa Trung Kim","Sa Trung Kim","Sơn Hạ Hỏa","Sơn Hạ Hỏa","Bình Địa Mộc","Bình Địa Mộc",
+  "Bích Thượng Thổ","Bích Thượng Thổ","Kim Bạc Kim","Kim Bạc Kim","Phú Đăng Hỏa","Phú Đăng Hỏa",
+  "Thiên Hà Thủy","Thiên Hà Thủy","Đại Trạch Thổ","Đại Trạch Thổ","Thoa Xuyến Kim","Thoa Xuyến Kim",
+  "Tang Đố Mộc","Tang Đố Mộc","Đại Khê Thủy","Đại Khê Thủy","Sa Trung Thổ","Sa Trung Thổ",
+  "Thiên Thượng Hỏa","Thiên Thượng Hỏa","Thạch Lựu Mộc","Thạch Lựu Mộc","Đại Hải Thủy","Đại Hải Thủy",
+];
+function napAmOf(canIdx, chiIdx){
+  for(let n=0;n<60;n++) if(n%10===(canIdx-1) && n%12===(chiIdx-1)) return NAP_AM_60[n];
+  return null;
+}
+function napAmHanh(napAm){
+  if(!napAm) return null;
+  const last = napAm.trim().split(/\s+/).pop();
+  return ['Mộc','Hỏa','Thổ','Kim','Thủy'].includes(last) ? last : null;
+}
+const GIO_RANGE = ['','23–01h','01–03h','03–05h','05–07h','07–09h','09–11h','11–13h','13–15h','15–17h','17–19h','19–21h','21–23h'];
 
 // Grid positions [row, col] for each địa chi (index 1-12)
 const GPOS = {1:[3,2],2:[3,1],3:[3,0],4:[2,0],5:[1,0],6:[0,0],
@@ -1693,7 +1735,8 @@ function run(){
   const chiTT  = chiThangSinh(lun.m);
 
   renderGrid(P, cMenh, cThan, fn, lun, cn, chiN, cucName, tuan1, tuan2, trietChi, chiNamXem, Y, namXem, luuTuanPos, luuTrietPos,
-    {gt, solD:D, solM:M, canNamXem, chiNamXem, thangXem, canND, chiND, canGioB, canTT, chiTT, gs});
+    {gt, solD:D, solM:M, canNamXem, chiNamXem, thangXem, canND, chiND, canGioB, canTT, chiTT, gs,
+     lunD:lun.d, lunM:lun.m, lunLeap:lun.leap});
   document.getElementById('result').classList.add('show');
   document.getElementById('result').scrollIntoView({behavior:'smooth'});
 }
@@ -1712,13 +1755,15 @@ function renderSummary(fn, gt, sol, lun, cn, chiN, cucName, cMenh, cThan, namXem
   `;
 }
 
+// Trang live hiển thị chữ đầy đủ (Miếu/Vượng/Đắc/Bình/Hãm) mờ-nghiêng dưới tên sao,
+// không dùng badge 1 chữ cái tô màu — khớp VUONG_MIET_FULL bên backend calculate-la-so
+const VUONG_MIET_FULL = {M:'Miếu',V:'Vượng','Đ':'Đắc',B:'Bình',H:'Hãm'};
 function stateTag(starName, chiPos){
   const row = TRANG_THAI[starName];
   if(!row) return '';
   const s = row[chiPos];
   if(!s) return '';
-  const cls = {M:'state-M',V:'state-V','Đ':'state-D',B:'state-B',H:'state-H'}[s]||'';
-  return `<span class="state ${cls}">${s}</span>`;
+  return VUONG_MIET_FULL[s] || s;
 }
 
 // Stars that go on the RIGHT column (bad/negative stars + all lưu stars)
@@ -1801,7 +1846,8 @@ function starHTML(star, palaceChi){
 
   if(cat==='chinh'){
     const st = stateTag(name, palaceChi);
-    return `<div class="star s-chinh${nhCls}">${nameHtml}${st}</div>`;
+    const stHtml = st ? `<div class="chinh-state">${st}</div>` : '';
+    return `<div class="star s-chinh${nhCls}"><span class="chinh-name-row">${nameHtml}</span>${stHtml}</div>`;
   }
   if(cat==='s-luu-nam')   return `<div class="star s-luu-nam${nhCls}">${nameHtml}</div>`;
   if(cat==='s-luu-thang') return `<div class="star s-luu-thang${nhCls}">${nameHtml}</div>`;
@@ -1850,9 +1896,11 @@ function renderGrid(P, cMenh, cThan, fn, lun, cn, chiN, cucName, tuan1, tuan2, t
     const [r,c] = GPOS[chi];
     const p = P[chi];
 
+    // Trang live tô viền vàng cho CẢ Mệnh lẫn Thân (chỉ chữ "Thân" mới màu teal) —
+    // trước đây demo bỏ trống Thân-riêng, khiến bố cục trông khác trang live
     let cls = 'palace';
     if(p.isMenh&&p.isThan) cls+=' p-both';
-    else if(p.isMenh) cls+=' p-menh';
+    else if(p.isMenh||p.isThan) cls+=' p-menh';
 
     // Tuần/Triệt between-palace classes
     if(tuanBdr  && tuanBdr.chi  === chi) cls += ` tuan-${tuanBdr.dir}`;
@@ -1874,7 +1922,7 @@ function renderGrid(P, cMenh, cThan, fn, lun, cn, chiN, cucName, tuan1, tuan2, t
     const isBoth     = p.isMenh && p.isThan;
     const cungNameCls = (p.isMenh) ? 'p-cung-name cn-menh' : 'p-cung-name';
     let cungLabel = p.name || '';
-    if(isBoth) cungLabel += '<span class="p-than-tag">Mệnh·Thân</span>';
+    if(isBoth) cungLabel += '<span class="p-than-tag">·Thân</span>';
     else if(isThanOnly) cungLabel += '<span class="p-than-tag">Thân</span>';
     const headerCtr = `<div class="p-header-ctr"><span class="${cungNameCls}">${cungLabel}</span></div>`;
 
@@ -1908,7 +1956,7 @@ function renderGrid(P, cMenh, cThan, fn, lun, cn, chiN, cucName, tuan1, tuan2, t
       ? '<div class="vo-chinh-dieu">Vô Chính Diệu</div>'
       : `<div class="stars-chinh">
           <div class="chinh-col">${chinhL.map(s=>starHTML(s,chi)).join('')}</div>
-          <div class="chinh-col">${chinhR.map(s=>starHTML(s,chi)).join('')}</div>
+          <div class="chinh-col chinh-col-right">${chinhR.map(s=>starHTML(s,chi)).join('')}</div>
         </div>`;
 
     // Phụ tinh left/right
@@ -1948,39 +1996,61 @@ function renderGrid(P, cMenh, cThan, fn, lun, cn, chiN, cucName, tuan1, tuan2, t
       </div>`;
   }
 
-  // Center box — Tứ Trụ + thông tin
+  // Center box — Tứ Trụ + thông tin (bố cục + nội dung khớp trang live: Năm/Tháng Xem
+  // lên trước, Ngày Sinh có cả Dương lẫn Âm lịch, Tứ Trụ kèm Nạp Âm tô màu ngũ hành)
   const {gt:mgt=1, solD=0, solM=0, canNamXem:cnx=0, thangXem:tx=0,
-         canND=1, chiND=1, canGioB=1, canTT=1, chiTT=1, gs:gsBirth=1} = meta;
+         canND=1, chiND=1, canGioB=1, canTT=1, chiTT=1, gs:gsBirth=1,
+         lunD=0, lunM=0, lunLeap=false} = meta;
   const gtTxt   = mgt===1?'Nam':'Nữ';
   const solDate = solD&&solM ? `${solD}/${solM}/${birthYear}` : `${birthYear}`;
-  const namXemStr = namXem && cnx ? `${CAN[cnx]} ${CHI[chiNamXem]} (${namXem})` : '';
-  const thangStr  = tx ? ` · T.${tx}` : '';
-  // Tứ Trụ cols: Giờ / Ngày / Tháng / Năm
+  const lunDate = lunD&&lunM ? `${lunD}/${lunM}${lunLeap?' (nhuận)':''} · ${CAN[cn]} ${CHI[chiN]}` : '';
+  const gioTxt  = `${CHI[gsBirth]} (${GIO_RANGE[gsBirth]||''})`;
+  const namXemStr   = namXem && cnx ? `${CAN[cnx]} ${CHI[chiNamXem]} (${namXem})` : '';
+  const thangXemStr = tx ? `Tháng ${tx}` : '';
+  // Tứ Trụ cols: Giờ / Ngày / Tháng / Năm — kèm Nạp Âm + màu ngũ hành Can/Chi
   const ttCols = [
     {hdr:'Giờ',    can:canGioB, chi:gsBirth},
     {hdr:'Ngày',   can:canND,   chi:chiND},
     {hdr:'Tháng',  can:canTT,   chi:chiTT},
     {hdr:'Năm',    can:cn,      chi:chiN},
   ];
-  const ttHtml = ttCols.map(({hdr,can,chi})=>`
+  const ttHtml = ttCols.map(({hdr,can,chi})=>{
+    const na   = napAmOf(can, chi);
+    const naH  = napAmHanh(na);
+    const canCol = NGU_HANH_COLOR[CAN_HANH[can]] || '';
+    const chiCol = NGU_HANH_COLOR[CHI_HANH[chi]] || '';
+    const naCol  = naH ? (NGU_HANH_COLOR[naH]||'') : '';
+    return `
     <div class="tt-col">
       <div class="tt-hdr">${hdr}</div>
-      <div class="tt-can">${CAN[can]}</div>
-      <div class="tt-chi">${CHI[chi]}</div>
-    </div>`).join('');
+      <div class="tt-can" style="color:${canCol}">${CAN[can]}</div>
+      <div class="tt-chi" style="color:${chiCol}">${CHI[chi]}</div>
+      ${na?`<div class="tt-napam" style="color:${naCol}">${na}</div>`:''}
+    </div>`;
+  }).join('');
   const center = `
     <div class="center-box" style="grid-row:2/4;grid-column:2/4">
       <div class="center-name">${fn||'Chủ nhân'}</div>
       <div class="center-div"></div>
-      <div class="ci-row"><span class="ci-lbl">DL</span><span class="ci-val">${solDate} · ${gtTxt}</span></div>
+
+      ${namXemStr?`
+      <div class="ci-row"><span class="ci-lbl">Năm Xem</span><span class="ci-val ci-gold">${namXemStr}</span></div>
+      ${thangXemStr?`<div class="ci-row"><span class="ci-lbl">Tháng Xem</span><span class="ci-val ci-gold">${thangXemStr}</span></div>`:''}
+      <div class="ci-sep"></div>`:''}
+
+      <div class="ci-section-lbl">Ngày Sinh</div>
+      <div class="ci-row"><span class="ci-lbl">Dương Lịch</span><span class="ci-val">${solDate}</span></div>
+      ${lunDate?`<div class="ci-row"><span class="ci-lbl">Âm Lịch</span><span class="ci-val ci-gold">${lunDate}</span></div>`:''}
+      <div class="ci-row"><span class="ci-lbl">Giờ / Giới tính</span><span class="ci-val">${gioTxt} · ${gtTxt}</span></div>
       <div class="ci-sep"></div>
+
       <div class="ci-section-lbl">Tứ Trụ</div>
       <div class="tu-tru-grid">${ttHtml}</div>
       <div class="ci-sep"></div>
+
       <div class="ci-row"><span class="ci-lbl">Mệnh cục</span><span class="ci-val">${cucName}</span></div>
-      <div class="ci-row"><span class="ci-lbl">Cung Mệnh</span><span class="ci-val">${CHI[cMenh]}</span></div>
-      <div class="ci-row"><span class="ci-lbl">Cung Thân</span><span class="ci-val">${CHI[cThan]}</span></div>
-      ${namXemStr?`<div class="ci-sep"></div><div class="ci-section-lbl ci-green">Lưu Niên</div><div class="ci-row"><span class="ci-lbl">Năm xem</span><span class="ci-val ci-green">${namXemStr}${thangStr}</span></div>`:''}
+      <div class="ci-row"><span class="ci-lbl">Cung Mệnh</span><span class="ci-val ci-gold">${CHI[cMenh]}</span></div>
+      <div class="ci-row"><span class="ci-lbl">Cung Thân</span><span class="ci-val ci-teal">${CHI[cThan]}</span></div>
     </div>`;
 
   let html = '';
