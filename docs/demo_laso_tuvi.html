@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Đại Việt Tinh Tử — Lá Số Tử Vi</title>
+<title>Đại Hồng Việt Tử Vi — Lá Số Tử Vi</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -259,6 +259,12 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
   grid-template-rows: repeat(4, auto);
   gap: 5px;
   min-width: 340px;
+}
+/* Bọc scroll ngang an toàn — nếu grid vẫn rộng hơn màn hình (điện thoại rất nhỏ)
+   thì vuốt ngang thay vì bị body{overflow-x:hidden} cắt mất cột cuối */
+.laso-grid-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Palace cell */
@@ -572,7 +578,8 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
   display: flex;
   align-items: center;
   gap: 3px;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 /* 14 Chính tinh */
 .star.s-chinh {
@@ -812,10 +819,22 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
 @media (max-width: 640px) {
   .grid-2 { grid-template-columns: 1fr; }
   .summary { grid-template-columns: 1fr 1fr; }
+  .chart-wrap { padding: 12px 8px; }
+  .result { padding: 0 8px 48px; }
   .palace { min-height: 90px; padding: 5px; }
   .star.s-chinh { font-size: 9.5px; }
   .star { font-size: 8.5px; }
   .cta-card { flex-direction: column; }
+}
+/* Điện thoại nhỏ (iPhone SE, Android compact ~360-400px) — thu nhỏ thêm để
+   lá số vừa màn hình mà không cần vuốt ngang */
+@media (max-width: 420px) {
+  .laso-grid { min-width: 300px; gap: 3px; }
+  .palace { min-height: 82px; padding: 4px; }
+  .star { font-size: 8px; gap: 2px; }
+  .star.s-chinh { font-size: 9px; }
+  .p-name { font-size: 9.5px; }
+  .p-canchi { font-size: 9px; }
 }
 </style>
 </head>
@@ -823,7 +842,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
 
 <!-- Header -->
 <div class="header">
-  <div class="logo-eyebrow">Đại Việt Tinh Tử</div>
+  <div class="logo-eyebrow">Đại Hồng Việt Tử Vi</div>
   <h1>Lá Số Tử Vi Cá Nhân</h1>
   <p class="header-tagline">Biết khi nào nên tiến, khi nào nên dừng — mỗi ngày một tín hiệu từ chính lá số của bạn.</p>
   <p style="margin-top:8px;font-size:11px;opacity:.55;">Phân tích chu kỳ vận trình · Hệ thống Tử Vi Đẩu Số</p>
@@ -900,7 +919,9 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5); curs
   <div class="summary" id="sum"></div>
   <div class="chart-wrap">
     <div class="chart-heading">✦ Thiên Bàn  ·  Địa Bàn  ·  Nhân Bàn ✦</div>
-    <div class="laso-grid" id="grid"></div>
+    <div class="laso-grid-scroll">
+      <div class="laso-grid" id="grid"></div>
+    </div>
     <div class="legend">
       <div class="leg-item"><div class="leg-dot" style="background:var(--gold-lt)"></div>Chính tinh</div>
       <div class="leg-item"><div class="leg-dot" style="background:var(--success)"></div>Hóa Lộc</div>
@@ -970,7 +991,7 @@ function _sunLong(jd,tz){
   var r=280.46645+36000.76983*e+3032e-7*l+
     ((1.9146-.004817*e-14e-6*l)*Math.sin(i*o)+(.019993-101e-6*e)*Math.sin(2*i*o)+29e-5*Math.sin(3*i*o));
   r*=i; r-=2*_RT*_HT(r/(2*_RT));
-  return _HT(r/_RT);
+  return _HT(r/(_RT/6));
 }
 function _newMoon(k){
   var n=k/1236.85,e=n*n,l=e*n,i=_RT/180;
@@ -1041,7 +1062,7 @@ const NGU_HANH_SAO = {
   'Tham Lang':   'Âm Thủy (đới Mộc)',
   'Cự Môn':      'Âm Thủy (đới Kim)',
   'Thiên Tướng': 'Dương Thủy',
-  'Thiên Lương': 'Âm Mộc (đới Thổ)',
+  'Thiên Lương': 'Dương Mộc (đới Thổ)',
   'Thất Sát':    'Dương Kim (đới Hỏa)',
   'Phá Quân':    'Âm Thủy (đới Kim)',
   // Tứ Hóa
@@ -1056,9 +1077,9 @@ const NGU_HANH_SAO = {
   'L.Triệt':'Dương Kim (đới Thủy)',
   // Lục Cát
   'Văn Xương':  'Âm Kim (đới Thổ)',
-  'Văn Khúc':   'Âm Thủy',
-  'Tả Phù':     'Dương Thổ',
-  'Hữu Bật':    'Âm Thổ',
+  'Văn Khúc':   'Âm Thủy (đới Hỏa)',
+  'Tả Phù':     'Dương Thổ (đới Kim)',
+  'Hữu Bật':    'Âm Thổ (đới Thủy)',
   'Thiên Khôi': 'Dương Hỏa (đới Kim)',
   'Thiên Việt': 'Âm Hỏa (đới Mộc)',
   // Lục Sát
@@ -1136,6 +1157,8 @@ const NGU_HANH_SAO = {
   'Địa Giải':   'Âm Thổ',   // Sự che chở, hấp thụ hung hiểm của Đất mẹ
   'Thiên Đức':  'Dương Hỏa',
   'Nguyệt Đức': 'Âm Hỏa',
+  'Quốc Ấn':    'Âm Thổ',
+  'Thiên Trù':  'Dương Thổ',
 };
 // Map ngũ hành tên → CSS class suffix
 const HANH_CLASS = {'Kim':'kim','Mộc':'moc','Thủy':'thuy','Hỏa':'hoa','Thổ':'tho'};
@@ -1517,8 +1540,11 @@ function run(){
   add(dich(chiN, -(tt-1), gs-1), 'Đẩu Quân', 's-phi');
   const tquanMap =[0,8,5,6,3,4,10,12,10,11,7];
   const tphucMap =[0,10,9,1,12,4,3,7,6,7,6];
+  const ttruuMap =[0,6,7,1,6,7,9,3,7,10,11];
   if(tquanMap[cn]) add(tquanMap[cn], 'Thiên Quan',  's-tro');
   if(tphucMap[cn]) add(tphucMap[cn], 'Thiên Phúc',  's-tro');
+  if(ttruuMap[cn]) add(ttruuMap[cn], 'Thiên Trù',   's-tro');
+  add(dich(ltPos,8),               'Quốc Ấn',      's-tro');
 
   // ── VÒNG THÁI TUẾ (12 sao, thuận từ chi năm) ──
   const ttG=['Thái Tuế','Thiếu Dương','Tang Môn','Thiếu Âm',
@@ -1737,9 +1763,11 @@ function parseNguHanh(rawName){
 }
 
 // Tạo HTML tên sao: split màu nếu có đới, thêm +/− Âm/Dương
+// Lưu ý: KHÔNG in lại prefix "L.Năm "/"L.Tháng " trong tên hiển thị — màu
+// (xanh lá/teal) + in nghiêng của .s-luu-nam/.s-luu-thang đã đủ phân biệt,
+// và bỏ prefix giúp tên sao không bị tràn/chồng cung khi xem trên mobile.
 function starNameHtml(rawName, nh){
-  const bare   = rawName.replace(/^L\.[^\s]+ /,'');
-  const prefix = rawName.slice(0, rawName.length - bare.length);
+  const bare = rawName.replace(/^L\.[^\s]+ /,'');
 
   // Ký hiệu +/−
   const sign    = nh.duong ? '+' : nh.am ? '−' : '';
@@ -1753,15 +1781,15 @@ function starNameHtml(rawName, nh){
     if(sp >= 0){
       const first = bare.slice(0, sp);
       const rest  = bare.slice(sp);          // kèm khoảng trắng
-      return `${prefix}${signHtml}<span class="${nh.mainCls}">${first}</span><span class="${nh.doiCls}">${rest}</span>`;
+      return `${signHtml}<span class="${nh.mainCls}">${first}</span><span class="${nh.doiCls}">${rest}</span>`;
     }
   }
 
   // Luôn wrap trong span để màu không bị div-level .s-luu-nam overide
   if(nh.mainCls){
-    return `${prefix}${signHtml}<span class="${nh.mainCls}">${bare}</span>`;
+    return `${signHtml}<span class="${nh.mainCls}">${bare}</span>`;
   }
-  return `${prefix}${signHtml}${bare}`;
+  return `${signHtml}${bare}`;
 }
 
 function starHTML(star, palaceChi){
