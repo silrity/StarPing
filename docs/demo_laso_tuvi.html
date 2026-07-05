@@ -2092,6 +2092,11 @@ Ngày sinh: ${ns} | Giờ: ${gs} | Giới tính: ${gt==="1"?"Nam":"Nữ"}`);
   btn.style.background = "var(--success)";
   btn.disabled = true;
 }
+
+// Tự động An Sao ngay khi mở file (dùng dữ liệu mặc định của form) — file test UI
+// thuần client-side, không gọi BE, để xem full lá số ngay mà không cần bấm nút,
+// tiện test trên mobile view.
+run();
 </script>
 </body>
 </html>
