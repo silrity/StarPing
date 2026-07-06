@@ -83,7 +83,7 @@ StarPing/                              ← Repo backend + docs
 │       ├── Lovable_E1_CustomerDetail_BatTu_LaSo.md
 │       ├── Lovable_E2_CustomerDetail_FullPage.md
 │       ├── Lovable_E2_Fix_Navigate.md
-│       ├── Lovable_F1_SupportInbox_UI.md  ← Support Ticket UI (mock-data, DB pending)
+│       ├── Lovable_F1_SupportInbox_UI.md  ← Support Ticket UI (nay đã live DB, xem Section 7)
 │       └── PUSH_NOTIFICATION_APP_SPEC.md  ← ⚠️ Project cũ (Live Payments), KHÔNG phải ĐVTT
 │
 ├── src/
@@ -98,12 +98,18 @@ StarPing/                              ← Repo backend + docs
     │   ├── register/index.ts          ← Đăng ký + kích hoạt trial
     │   ├── resend-confirm/index.ts    ← Gửi lại email xác nhận
     │   ├── send-nhat-van/index.ts     ← Gửi Nhật Vận qua Email
+    │   ├── send-inquiry-reply/index.ts ← Email báo khách khi staff trả lời ticket
     │   └── sepay-webhook/index.ts     ← Nhận callback thanh toán từ SePay
     └── migrations/
-        ├── 20260613000001_initial_schema.sql      ← profiles, user_profiles, subscriptions, payments, nhat_van_content, notification_log, whitelist, audit_log, system_config
+        ├── 20260613000001_initial_schema.sql      ← users, user_profiles, subscriptions, payments, nhat_van_content, notification_log, whitelist, audit_log, system_config
         ├── 20260614000002_nguyet_van_and_monitoring.sql  ← nguyet_van_content, notification_dispatch_log
         ├── 20260615000003_iot_rls.sql             ← RLS policies cho IOT
-        └── 20260615000004_user_charts.sql         ← user_charts (cache lá số cố định)
+        ├── 20260615000004_user_charts.sql         ← user_charts (cache lá số cố định)
+        ├── 20260628000005_pg_cron_setup.sql       ← pg_cron cho send-nhat-van
+        ├── 20260628000006_inquiries.sql           ← inquiries, inquiry_messages, view inquiry_list, RLS
+        ├── 20260706000007_inquiry_assignment.sql  ← inquiry_assignments, RLS gán/từ chối, view consultant_workload
+        ├── 20260706000008_realtime_inquiries.sql  ← Bật Realtime cho bảng inquiries
+        └── 20260706000009_inquiry_category.sql    ← Cột category (tu_van/tai_khoan_thanh_toan) + RLS siết theo category
 ```
 
 ```
@@ -112,12 +118,17 @@ tuvidaihongviet/                       ← Repo frontend (Lovable)
     ├── components/
     │   ├── LaSoSection.tsx            ← ⭐ Hiển thị lá số + selector năm/tháng xem
     │   └── ...
+    ├── lib/
+    │   ├── supabase.ts                ← Client Customer Portal (KHÔNG hardcode global.headers.Authorization!)
+    │   └── supabase-iot.ts            ← Client IOT (session riêng, storageKey khác)
+    ├── hooks/
+    │   └── use-iot-auth.ts            ← Đọc quyền từ session.user.app_metadata.role
     └── routes/
         ├── index.tsx                  ← Landing page
         ├── dang-ky.tsx                ← Đăng ký
         ├── dang-nhap.tsx              ← Đăng nhập
-        ├── portal.*.tsx               ← Customer portal
-        └── iot.*.tsx                  ← IOT internal portal
+        ├── tai-khoan.tsx               ← Customer Portal (tabs: Hồ Sơ/Gói/Giao Dịch/Tư Vấn/Hỗ Trợ)
+        └── iot.*.tsx                  ← IOT internal portal (iot.ho-tro.tsx = Tư Vấn + Hỗ Trợ Tài Khoản)
 ```
 
 ---
@@ -198,20 +209,30 @@ hoặc tài chính.
 
 ## 7. DATABASE SCHEMA (Supabase PostgreSQL)
 
-> **Lưu ý kiến trúc:** Supabase quản lý `auth.users`. ĐVTT dùng `public.profiles` (1-1 FK với `auth.users`) để lưu dữ liệu mở rộng — KHÔNG tạo lại bảng users thủ công.
+> **Lưu ý kiến trúc:** Supabase quản lý `auth.users`. ĐVTT dùng **`public.users`** (1-1 FK với `auth.users`, KHÔNG phải `public.profiles` như tên gọi cũ ở vài chỗ tài liệu) để lưu dữ liệu mở rộng — KHÔNG tạo lại bảng users thủ công.
+>
+> **⚠️ Tạo tài khoản nội bộ (staff) — 2 bước bắt buộc, hay bị quên:**
+> 1. Insert/update row trong `public.users` với `role` đúng (`admin`/`van_hanh`/`tu_van_vien`).
+> 2. **Riêng biệt**, set `app_metadata.role` trên chính `auth.users` — 2 nơi này KHÔNG tự đồng bộ:
+>    ```sql
+>    update auth.users set raw_app_meta_data = raw_app_meta_data || jsonb_build_object('role', 'tu_van_vien')
+>    where id = '<uid>';
+>    ```
+>    IOT (`useIotAuth`) đọc quyền từ `session.user.app_metadata.role` (= `auth.users.raw_app_meta_data`), KHÔNG query `public.users`. Thiếu bước 2 → tài khoản báo "không có quyền truy cập" dù `public.users.role` đã đúng. Sau khi set, tài khoản phải đăng nhập lại (session cũ không tự refresh claim).
 
-### Bảng `profiles` (extend auth.users)
+### Bảng `users` (extend auth.users)
 ```sql
-id UUID PK (= auth.users.id) | full_name TEXT | phone_zalo TEXT
+id UUID PK (= auth.users.id) | email TEXT | full_name TEXT | phone_zalo TEXT
 role TEXT: 'customer' | 'tu_van_vien' | 'van_hanh' | 'admin'
-is_active BOOLEAN | customer_code TEXT UNIQUE  -- format: DVTT00101+
+is_active BOOLEAN | email_verified BOOLEAN | customer_code TEXT UNIQUE  -- format: DVTT00101+
 created_at | updated_at
 ```
+*Tạo thủ công trong `register` Edge Function lúc signup (không có trigger tự động) — staff account tạo tay qua Supabase Dashboard + SQL (xem lưu ý trên).*
 *Trigger `on_auth_user_created` tự tạo profile khi user signup.*
 
 ### Bảng `user_profiles` (Bát Tự)
 ```sql
-id UUID PK | user_id UUID FK → profiles (UNIQUE)
+id UUID PK | user_id UUID FK → users (UNIQUE)
 birth_day INT | birth_month INT | birth_year INT
 birth_hour_input INT (0–23) | birth_hour_chi INT (1=Tý...12=Hợi)
 gender TEXT: 'male' | 'female'
@@ -220,7 +241,7 @@ lunar_day INT | lunar_month INT | lunar_year INT | is_leap_month BOOLEAN
 
 ### Bảng `user_charts` (Cache lá số cố định)
 ```sql
-id UUID PK | user_id UUID FK → profiles (UNIQUE)
+id UUID PK | user_id UUID FK → users (UNIQUE)
 can_nam/chi_nam/can_thang/chi_thang/can_ngay/chi_ngay/can_gio/chi_gio TEXT
 cung_menh INT | cung_than INT | cuc_so INT | cuc_name TEXT
 palaces JSONB  -- 12 cung + sao cố định (cat: chinh/phu/sat), KHÔNG có lưu tinh
@@ -230,7 +251,7 @@ computed_at TIMESTAMPTZ
 
 ### Bảng `subscriptions`
 ```sql
-id UUID PK | user_id UUID FK → profiles
+id UUID PK | user_id UUID FK → users
 plan_type: 'free' | 'trial' | 'co_ban' | 'chuyen_sau' | 'chien_luoc'
 billing_cycle: 'monthly' | 'yearly'
 status: 'trial' | 'active' | 'paused' | 'expired' | 'cancelled' | 'suspended'
@@ -265,7 +286,7 @@ signal_type: 'thuan_loi' | 'khang_luc' | 'trung_tinh'
 title TEXT (≤120) | tong_quan TEXT (≤800) ← BẮT BUỘC
 su_nghiep/tai_chinh/tinh_cam/suc_khoe TEXT (≤300 each) ← optional
 action_tips TEXT (≤400) | canh_bao TEXT (≤300) ← optional
-created_by UUID FK → profiles
+created_by UUID FK → users
 ```
 
 ### Bảng `notification_dispatch_log`
@@ -303,24 +324,42 @@ key TEXT PK | value TEXT | updated_by UUID FK | updated_at TIMESTAMPTZ
 
 ### Bảng `audit_log`
 ```sql
-id UUID PK | actor_id UUID FK → profiles
+id UUID PK | actor_id UUID FK → users
 action TEXT | target_type TEXT | target_id UUID
 details JSONB | ip_address INET | created_at TIMESTAMPTZ
 ```
 
-### Bảng `inquiries` + `inquiry_messages` — PLANNED (chưa migrate)
+### Bảng `inquiries` + `inquiry_messages` + `inquiry_assignments` ✅ LIVE (migrations 006–009)
 ```sql
--- inquiries: ticket hỗ trợ từ khách hàng
-id UUID PK | customer_id UUID FK → profiles | subject TEXT
+-- inquiries: ticket Tư Vấn hoặc Hỗ Trợ Tài Khoản/Thanh Toán từ khách hàng
+id UUID PK | inquiry_code TEXT UNIQUE  -- DVTT-INQ-000001 (auto, trigger)
+customer_id UUID FK → users | subject TEXT
 status: 'open' | 'in_progress' | 'resolved' | 'closed'
-assigned_to UUID FK → profiles | channel: 'web_form' | 'email'
+priority: 'high' | 'normal'
+category: 'tu_van' | 'tai_khoan_thanh_toan'  -- tách "Tư Vấn" (chat với tư vấn viên) vs "Hỗ Trợ" (tài khoản/giao dịch/thanh toán, chỉ admin/van_hanh)
+assigned_to UUID FK → users | channel: 'web_form' | 'email'
 created_at | updated_at
 
 -- inquiry_messages: thread tin nhắn trong ticket
-id UUID PK | inquiry_id UUID FK | sender_id UUID FK → profiles
+id UUID PK | inquiry_id UUID FK | sender_id UUID FK → users
 body TEXT | is_internal BOOLEAN (staff-only note)
 created_at
+
+-- inquiry_assignments: lịch sử gán/từ chối (nội bộ, khách không thấy)
+id UUID PK | inquiry_id UUID FK | action: 'assigned' | 'declined'
+from_user UUID FK → users | to_user UUID FK → users (NULL nếu từ chối → về hàng chờ)
+reason TEXT (bắt buộc khi declined) | actor_id UUID FK → users | created_at
 ```
+**View `inquiry_list`**: gộp ticket + tên/email KH + gói + `assigned_to_name` + `message_count`/`last_message_at`, dùng chung cho Customer Portal (lọc theo `customer_id` + `category`) và IOT (`security_invoker = true`).
+**View `consultant_workload`**: số khách/ticket đang active (`open`/`in_progress`) theo từng tư vấn viên — hiện trong IOT cho admin/van_hanh.
+
+**RLS quan trọng:** `tu_van_vien` chỉ SELECT/UPDATE được ticket `assigned_to = auth.uid() AND category = 'tu_van'`; chỉ tự đặt `assigned_to = NULL` (từ chối, bắt buộc lý do qua `inquiry_assignments`), KHÔNG tự gán cho tư vấn viên khác. `admin`/`van_hanh` full access mọi category. Ticket category `tai_khoan_thanh_toan` KHÔNG bao giờ gán cho tư vấn viên (IOT chặn ở UI).
+
+**Realtime:** bật cho `inquiries` và `inquiry_messages` (`postgres_changes`) — ticket mới/vừa gán và tin nhắn hiện live ở cả 2 phía, không cần refresh.
+
+**Customer Portal (`tai-khoan.tsx`):** 2 tab dùng chung component `SupportTab` (khác nhau qua prop `category`) — **"Tư Vấn"** (chat hỏi đáp Tử Vi) và **"Hỗ Trợ"** (tài khoản/giao dịch/thanh toán, giữ khối liên hệ Zalo/Email + FAQ). Mỗi tab có 3 view: danh sách hội thoại → khung chat toàn phần → form câu hỏi mới.
+
+**IOT (`iot.ho-tro.tsx`):** bộ lọc theo category, nút "Từ chối ticket" cho tư vấn viên (bắt buộc lý do), panel workload cho admin/van_hanh.
 
 ---
 
@@ -458,7 +497,7 @@ Landing Page (nhập Bát Tự)
 |---|---|
 | `admin` | Full access: quản lý user, subscription, payment, audit log |
 | `van_hanh` (Operator) | Vận hành ngày-ngày: nhập CMS, xem KH, pause/resume subscription |
-| `tu_van_vien` (Consultant) | Read-only: xem thông tin KH + lá số + trả lời inquiries |
+| `tu_van_vien` (Consultant) | Chỉ ticket **category='tu_van'** được gán cho mình: xem thông tin KH + lá số + trả lời. KHÔNG thấy ticket `tai_khoan_thanh_toan`. Có thể tự "Từ chối" ticket của mình (bắt buộc lý do) → về hàng chờ, không tự gán cho người khác. |
 | `customer` | User thông thường |
 
 **IOT (Internal Operation Tool):** Portal nội bộ tại `/iot/*` trong `tuvidaihongviet`.
@@ -466,7 +505,7 @@ Landing Page (nhập Bát Tự)
 - Thao tác: Block, Pause/Resume, Extend, Manual Activate subscription
 - Quản lý giao dịch + hoàn tiền
 - Coupon management
-- Support Inbox — xem/trả lời ticket hỗ trợ, gán tư vấn viên
+- Support/Tư Vấn Inbox (`iot.ho-tro.tsx`) — xem/trả lời ticket, gán/từ chối tư vấn viên (chỉ `tu_van`), lọc theo category, xem workload tư vấn viên (admin/van_hanh)
 - Báo cáo tài chính (Revenue Report, Reconciliation, Tax Report)
 - Audit log (chỉ Admin xem)
 
@@ -517,7 +556,7 @@ Giai đoạn MVP: chỉ user được whitelist mới đăng ký được.
 - [x] IOT Portal (Internal Operation Tool)
 - [x] Whitelist gate (`check-whitelist` function + `system_config`)
 - [ ] Trang chọn gói subscription + thanh toán (pending)
-- [ ] Support Ticket UI đã mock-data — DB migration pending (`inquiries` tables)
+- [x] Support/Tư Vấn chat 2 chiều — `inquiries`/`inquiry_messages`/`inquiry_assignments` live (migrations 006–009), Customer Portal tab "Tư Vấn" + "Hỗ Trợ", IOT gán/từ chối/workload, Realtime cả 2 phía
 
 ### Phase 3 — Payment 🔄 Partial
 - [x] SePay webhook (`sepay-webhook` function)
@@ -534,7 +573,7 @@ Giai đoạn MVP: chỉ user được whitelist mới đăng ký được.
 
 ### Phase 5 — Admin Portal & CMS 🔄 Partial
 - [x] IOT portal UI (Lovable) — Customer list, subscription management
-- [x] Support Inbox UI (mock-data, cần DB)
+- [x] Support Inbox UI — live DB (`inquiries`), gán/từ chối/workload, filter theo category
 - [ ] CMS nhập Nhật Vận (calendar view)
 - [ ] Xác nhận thanh toán thủ công trên IOT
 - [ ] Audit log viewer
@@ -609,14 +648,17 @@ Giai đoạn MVP: chỉ user được whitelist mới đăng ký được.
 | `docs/demo_laso_tuvi.html` | Prototype gốc (chỉ đọc khi verify edge case) |
 | `tuvidaihongviet/src/components/LaSoSection.tsx` | UI hiển thị lá số + selector |
 | `docs/email_templates.md` | Nội dung email templates |
+| `supabase/migrations/20260628000006_inquiries.sql` → `...009_inquiry_category.sql` | Schema + RLS hệ thống Tư Vấn/Hỗ Trợ (chat 2 chiều) |
+| `tuvidaihongviet/src/routes/tai-khoan.tsx` | Customer Portal — tab Tư Vấn/Hỗ Trợ (`SupportTab`) |
+| `tuvidaihongviet/src/routes/iot.ho-tro.tsx` | IOT — quản lý ticket, gán/từ chối tư vấn viên, workload |
 
 ### Items đang chờ / blocked
 - **Zalo OA**: Pending họp stakeholder — chưa có OA account và ZNS template
 - **SePay**: Pending đăng ký merchant account
 - **Email domain**: Cần verify domain để Resend gửi cho mọi người (hiện tại sandbox → chỉ gửi được cho ted.bgn@gmail.com)
 - **Cron schedule**: Cần vào Supabase Dashboard → pg_cron → setup job cho `send-nhat-van`
-- **Inquiries DB**: Migration chưa có, UI mock-data đã có ở `iot.ho-tro.tsx`
 - **Thiên Lương ngũ hành**: Đã chốt "Dương Mộc (đới Thổ)" (Bang quyết định 07/2026) — đồng bộ ở code frontend + `nguHanh.md` + `anSao.md`
+- **Trang chọn gói + thanh toán**: UI chưa làm, chỉ có SePay webhook backend
 
 ---
 
