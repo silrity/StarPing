@@ -22,7 +22,6 @@ SELECT
   i.status,
   i.priority,
   i.channel,
-  i.category,
   i.created_at,
   i.updated_at,
   i.customer_id,
@@ -32,7 +31,8 @@ SELECT
   COALESCE(latest_sub.plan_type, 'free')            AS plan,
   au.full_name                                      AS assigned_to_name,
   COALESCE(msg_stats.message_count, 0)              AS message_count,
-  COALESCE(msg_stats.last_message_at, i.created_at) AS last_message_at
+  COALESCE(msg_stats.last_message_at, i.created_at) AS last_message_at,
+  i.category
 FROM public.inquiries i
 JOIN public.users u ON u.id = i.customer_id
 LEFT JOIN public.users au ON au.id = i.assigned_to
