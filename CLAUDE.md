@@ -642,6 +642,20 @@ Giai đoạn MVP: chỉ user được whitelist mới đăng ký được.
 - Luôn dùng ngôn ngữ phân tích, không dùng ngôn ngữ tâm linh (xem Section 4)
 - Disclaimer pháp lý phải có trên mọi nội dung user-facing
 
+### Test local frontend trước khi push (thay vì tin vào preview Lovable)
+Bang tự duyệt UI bằng mắt tại `localhost:8080` trước khi cho phép commit/push — không cần Claude tự động hóa Playwright/browser cho mỗi thay đổi nhỏ.
+
+1. `cd tuvidaihongviet && npm install` (chỉ khi `package.json` đổi) `&& npm run dev`
+2. Chờ server sẵn sàng bằng cách poll port (`curl -sf http://localhost:8080`), KHÔNG dùng `sleep` cố định
+3. Báo Bang: "mở `http://localhost:8080` xem [chỗ cần chú ý]" — Bang tự duyệt UI
+4. Bang ok → commit + push (luôn hỏi trước khi push, xem Git Safety Protocol)
+5. Tắt dev server: `tasklist //FI "IMAGENAME eq node.exe"` rồi `taskkill //PID <pid> //F`
+   (PID cột `ps aux` trong Git Bash là PID ảo MSYS, KHÔNG dùng được với `taskkill`)
+
+**Chỉ dùng Playwright/browser automation khi** cần verify thứ mắt thường không thấy: file tải về (MD/PNG export), lỗi console, luồng nhiều bước tự động, hoặc khi Bang không có mặt mà Claude cần tự xác nhận đầu-cuối trước khi báo cáo.
+
+⚠️ **Local KHÔNG có database riêng** — `tuvidaihongviet/src/lib/supabase.ts` gắn cứng URL + anon key production (`gqmjuzpwfpnvlpodqckt`), không có staging. An toàn để xem UI/layout; **không an toàn** để test luồng ghi dữ liệu thật (đăng ký, payment, gửi email) vì sẽ tạo record thật trên DB thật.
+
 ### Files quan trọng nhất để đọc khi cần context sâu
 
 | File | Mục đích |

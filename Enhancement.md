@@ -94,7 +94,7 @@ Dispatch log dùng upsert "resume" nhưng vòng lặp gửi không kiểm tra `n
 
 **Đã làm:** tách thuật toán ra `logic.ts` (index.ts chỉ còn serve), bộ 23 golden cases tại `calculate-la-so/tests/` (giờ Tý/Ngọ, nam/nữ, VCD, ranh giới Tết, tháng nhuận, 10 can Tứ Hóa, biên 1925/2008, lưu tháng/năm xem). Chạy: `deno test --allow-read tests/` — bắt buộc trước mỗi lần deploy. Quy trình đầy đủ: `tests/README.md`.
 
-**⬜ Còn lại:** Master xác nhận tay từng lá (in PNG gửi duyệt) → đổi `verified: true` trong `cases.ts`. Ưu tiên: `016-can-canh` (Tứ Hóa can Canh tranh cãi), `008-thang-nhuan`, `006`/`007` (Tết), `001` (giờ Tý). Hiện golden là regression baseline (chặn đổi ngoài ý muốn), chưa phải chân lý tuyệt đối.
+**✅ Bang đã xác nhận tay toàn bộ 23/23 case đúng (07/07/2026)** — xuất MD ra folder `LASO/` (script tạm, không nằm trong repo chính thức) rồi so từng cung/sao, mọi `verified: true` trong `cases.ts`. Riêng `016-can-canh-tu-hoa` (Tứ Hóa can Canh) vẫn nên có thêm ý kiến Master vì bảng này vốn có tranh cãi giữa các phái — Bang xác nhận đúng theo cách tính hiện tại của hệ thống, nhưng đây là lựa chọn trường phái chứ không phải đúng/sai tuyệt đối.
 
 ### 11. ⬜ `LaSoSection.tsx` 1.939 dòng + bản render lá số thứ 2
 File gồm form, fetch, grid, PalaceCell, CenterCell, phi tinh overlay, export MD/PNG trong 1 file. Đồng thời `LaSoView.tsx` (327 dòng) là bản hiển thị lá số khác với logic normalize riêng → đổi UI lá số phải sửa 2 nơi.
