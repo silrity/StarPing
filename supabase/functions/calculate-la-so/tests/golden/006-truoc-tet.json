@@ -1,0 +1,1080 @@
+{
+  "tu_tru": {
+    "can_nam": "Ất",
+    "chi_nam": "Dậu",
+    "can_thang": "Kỷ",
+    "chi_thang": "Sửu",
+    "can_ngay": "Đinh",
+    "chi_ngay": "Tỵ",
+    "can_gio": "Nhâm",
+    "chi_gio": "Dần"
+  },
+  "cuc_so": 5,
+  "cuc_name": "Thổ ngũ Cục",
+  "cung_menh": 12,
+  "cung_than": 4,
+  "_lunar": {
+    "d": 29,
+    "m": 12,
+    "y": 2005,
+    "leap": 0
+  },
+  "palaces": [
+    {
+      "chi": 1,
+      "cung_name": "Phụ Mẫu",
+      "can": "Mậu",
+      "stars": [
+        {
+          "name": "Tham Lang",
+          "cat": "chinh",
+          "vuong_miet": "Hãm",
+          "hoa": null
+        },
+        {
+          "name": "Thiên Khôi",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Riêu",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiếu Âm",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Hỉ",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Y",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Thọ",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Đẩu Quân",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Đại Hao",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tấu Thư",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tuế Phá",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiên Khốc",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiên Hư",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 15,
+      "dai_han_age_end": 24,
+      "tieu_han_year": null,
+      "truong_sinh": "Đế Vượng",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 2,
+      "cung_name": "Phúc Đức",
+      "can": "Kỷ",
+      "stars": [
+        {
+          "name": "Thiên Đồng",
+          "cat": "chinh",
+          "vuong_miet": "Hãm",
+          "hoa": null
+        },
+        {
+          "name": "Cự Môn",
+          "cat": "chinh",
+          "vuong_miet": "Hãm",
+          "hoa": null
+        },
+        {
+          "name": "Địa Kiếp",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Quan Phù",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Long Trì",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Phượng Các",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Giải Thần",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Hoa Cái",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Phục Binh",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tướng Quân",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Hóa Lộc",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Long Đức",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Đường Phù",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 25,
+      "dai_han_age_end": 34,
+      "tieu_han_year": null,
+      "truong_sinh": "Suy",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 3,
+      "cung_name": "Điền Trạch",
+      "can": "Mậu",
+      "stars": [
+        {
+          "name": "Vũ Khúc",
+          "cat": "chinh",
+          "vuong_miet": "Vượng",
+          "hoa": null
+        },
+        {
+          "name": "Thiên Tướng",
+          "cat": "chinh",
+          "vuong_miet": "Miếu",
+          "hoa": null
+        },
+        {
+          "name": "Đà La",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Kiếp Sát",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Tử Phù",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Nguyệt Đức",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Quan Phủ",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tiểu Hao",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Bạch Hổ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tuần Không",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 35,
+      "dai_han_age_end": 44,
+      "tieu_han_year": null,
+      "truong_sinh": "Bệnh",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 4,
+      "cung_name": "Quan Lộc",
+      "can": "Kỷ",
+      "stars": [
+        {
+          "name": "Thái Dương",
+          "cat": "chinh",
+          "vuong_miet": "Vượng",
+          "hoa": null
+        },
+        {
+          "name": "Thiên Lương",
+          "cat": "chinh",
+          "vuong_miet": "Vượng",
+          "hoa": null
+        },
+        {
+          "name": "Tả Phù",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Lộc Tồn",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Hóa Quyền",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": "quyen"
+        },
+        {
+          "name": "Tuế Phá",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Hư",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Quý",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Bác Sĩ",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thanh Long",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Phúc Đức",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiên Hỉ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Đào Hoa",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tuần Không",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 45,
+      "dai_han_age_end": 54,
+      "tieu_han_year": null,
+      "truong_sinh": "Tử",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": true
+    },
+    {
+      "chi": 5,
+      "cung_name": "Nô Bộc",
+      "can": "Canh",
+      "stars": [
+        {
+          "name": "Thất Sát",
+          "cat": "chinh",
+          "vuong_miet": "Hãm",
+          "hoa": null
+        },
+        {
+          "name": "Thiên Quan",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Kình Dương",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Thương",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Long Đức",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Đường Phù",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Phong Cáo",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Lực Sĩ",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên La",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Đà La",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Lực Sĩ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Điếu Khách",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Phượng Các",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Quả Tú",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Triệt Lộ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 55,
+      "dai_han_age_end": 64,
+      "tieu_han_year": null,
+      "truong_sinh": "Mộ",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 6,
+      "cung_name": "Thiên Di",
+      "can": "Tân",
+      "stars": [
+        {
+          "name": "Thiên Cơ",
+          "cat": "chinh",
+          "vuong_miet": "Vượng",
+          "hoa": null
+        },
+        {
+          "name": "Hóa Lộc",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": "loc"
+        },
+        {
+          "name": "Hỏa Tinh",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Bạch Hổ",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Phá Toái",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thanh Long",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Lộc Tồn",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Bác Sĩ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Hóa Quyền",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Trực Phù",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Phá Toái",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Triệt Lộ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 65,
+      "dai_han_age_end": 74,
+      "tieu_han_year": null,
+      "truong_sinh": "Tuyệt",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 7,
+      "cung_name": "Tật Ách",
+      "can": "Nhâm",
+      "stars": [
+        {
+          "name": "Tử Vi",
+          "cat": "chinh",
+          "vuong_miet": "Miếu",
+          "hoa": null
+        },
+        {
+          "name": "Văn Khúc",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Trù",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Hóa Khoa",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": "khoa"
+        },
+        {
+          "name": "Thiên Sứ",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Phúc Đức",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Hồng Loan",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Đào Hoa",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Đức",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Địa Giải",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Tiểu Hao",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Triệt Lộ",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Kình Dương",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Quan Phủ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thái Tuế",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 75,
+      "dai_han_age_end": 84,
+      "tieu_han_year": null,
+      "truong_sinh": "Thai",
+      "khong_vong": true,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 8,
+      "cung_name": "Tài Bạch",
+      "can": "Quý",
+      "stars": [
+        {
+          "name": "Điếu Khách",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Quả Tú",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Giải",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Tam Thai",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Bát Tọa",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Tướng Quân",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Triệt Lộ",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Phục Binh",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Lưu Hà",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiếu Dương",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 85,
+      "dai_han_age_end": 94,
+      "tieu_han_year": null,
+      "truong_sinh": "Dưỡng",
+      "khong_vong": true,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 9,
+      "cung_name": "Tử Tức",
+      "can": "Giáp",
+      "stars": [
+        {
+          "name": "Phá Quân",
+          "cat": "chinh",
+          "vuong_miet": "Hãm",
+          "hoa": null
+        },
+        {
+          "name": "Văn Xương",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Việt",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Phúc",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Linh Tinh",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Hình",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Trực Phù",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thai Phụ",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Tài",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Tấu Thư",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Đại Hao",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Hóa Khoa",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tang Môn",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiên Mã",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Cô Thần",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 95,
+      "dai_han_age_end": 104,
+      "tieu_han_year": null,
+      "truong_sinh": "Tràng Sinh",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 10,
+      "cung_name": "Phu Thê",
+      "can": "Ất",
+      "stars": [
+        {
+          "name": "Địa Không",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thái Tuế",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Khốc",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Phi Liêm",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Bệnh Phù",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiên Việt",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiếu Âm",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Hồng Loan",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 105,
+      "dai_han_age_end": 114,
+      "tieu_han_year": null,
+      "truong_sinh": "Mộc Dục",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 11,
+      "cung_name": "Huynh Đệ",
+      "can": "Bính",
+      "stars": [
+        {
+          "name": "Liêm Trinh",
+          "cat": "chinh",
+          "vuong_miet": "Miếu",
+          "hoa": null
+        },
+        {
+          "name": "Thiên Phủ",
+          "cat": "chinh",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiếu Dương",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Không",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Lưu Hà",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Hỉ Thần",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Địa Võng",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Hỉ Thần",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Hóa Kỵ",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Quan Phù",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Long Trì",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 115,
+      "dai_han_age_end": 124,
+      "tieu_han_year": 2026,
+      "truong_sinh": "Quan Đới",
+      "khong_vong": false,
+      "is_menh": false,
+      "is_than": false
+    },
+    {
+      "chi": 12,
+      "cung_name": "Mệnh",
+      "can": "Đinh",
+      "stars": [
+        {
+          "name": "Thái Âm",
+          "cat": "chinh",
+          "vuong_miet": "Miếu",
+          "hoa": null
+        },
+        {
+          "name": "Hữu Bật",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Quốc Ấn",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Hóa Kỵ",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": "ky"
+        },
+        {
+          "name": "Tang Môn",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Thiên Mã",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Cô Thần",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Ân Quang",
+          "cat": "phu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "Bệnh Phù",
+          "cat": "sat",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Phi Liêm",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Thiên Khôi",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        },
+        {
+          "name": "L.Năm Tử Phù",
+          "cat": "luu",
+          "vuong_miet": null,
+          "hoa": null
+        }
+      ],
+      "dai_han_age_start": 5,
+      "dai_han_age_end": 14,
+      "tieu_han_year": null,
+      "truong_sinh": "Lâm Quan",
+      "khong_vong": false,
+      "is_menh": true,
+      "is_than": false
+    }
+  ]
+}

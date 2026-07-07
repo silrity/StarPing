@@ -93,7 +93,10 @@ StarPing/                              ← Repo backend + docs
     ├── SUPABASE_SETUP.md              ← Hướng dẫn setup backend đầy đủ
     ├── functions/
     │   ├── _shared/cors.ts
-    │   ├── calculate-la-so/index.ts   ← ⭐ Thuật toán an sao (backend only)
+    │   ├── calculate-la-so/
+    │   │   ├── index.ts               ← Chỉ serve HTTP
+    │   │   ├── logic.ts               ← ⭐ Thuật toán an sao (backend only, pure function)
+    │   │   └── tests/                 ← Golden tests (23 lá số chuẩn) — xem tests/README.md
     │   ├── check-whitelist/index.ts
     │   ├── register/index.ts          ← Đăng ký + kích hoạt trial
     │   ├── resend-confirm/index.ts    ← Gửi lại email xác nhận
@@ -116,7 +119,7 @@ StarPing/                              ← Repo backend + docs
 tuvidaihongviet/                       ← Repo frontend (Lovable)
 └── src/
     ├── components/
-    │   ├── LaSoSection.tsx            ← ⭐ Hiển thị lá số + selector năm/tháng xem
+    │   ├── LaSoSection.tsx            ← ⭐ Hiển thị lá số + selector năm/tháng xem + xuất Tải lá số (.md)/In lá số (.png, `modern-screenshot`)
     │   └── ...
     ├── lib/
     │   ├── supabase.ts                ← Client Customer Portal (KHÔNG hardcode global.headers.Authorization!)
@@ -201,9 +204,11 @@ hoặc tài chính.
 ### Nguyên tắc kiến trúc BẮT BUỘC
 - **Thuật toán Tử Vi chỉ chạy trên Backend** — KHÔNG xử lý tính toán ở Frontend
 - `docs/demo_laso_tuvi.html` chứa prototype gốc — chỉ dùng nội bộ để verify edge case
-- Source of truth cho thuật toán: `docs/algorithm/TUVI_ALGORITHM_SPEC.md` + `supabase/functions/calculate-la-so/index.ts`
+- Source of truth cho thuật toán: `docs/algorithm/TUVI_ALGORITHM_SPEC.md` + `supabase/functions/calculate-la-so/logic.ts`
+- **Golden tests bắt buộc:** trước mỗi lần deploy `calculate-la-so`, chạy `deno test --allow-read tests/` từ thư mục function. Sửa thuật toán có chủ đích → regen golden + Master duyệt diff (quy trình: `tests/README.md`)
 - Frontend chỉ: nhận input → gọi API → render output
 - RLS (Row-Level Security) bắt buộc trên mọi bảng Supabase
+- **Xuất ảnh lá số (PNG):** dùng `modern-screenshot` (`domToPng`), KHÔNG dùng `html-to-image` — thư viện cũ bị bug cắt mất cột phải khi chụp DOM lá số (quá nhiều CSS property/element khiến SVG trung gian phình to, rasterize thiếu), đã thay hẳn ở `LaSoSection.tsx` (07/2026)
 
 ---
 
@@ -643,10 +648,11 @@ Giai đoạn MVP: chỉ user được whitelist mới đăng ký được.
 | `docs/product/Ops.md` | IOT spec |
 | `supabase/SUPABASE_SETUP.md` | Backend setup guide + migration SQL đầy đủ |
 | `docs/algorithm/TUVI_ALGORITHM_SPEC.md` | ⭐ Spec thuật toán (source of truth) |
-| `supabase/functions/calculate-la-so/index.ts` | Implementation thuật toán hiện tại |
+| `supabase/functions/calculate-la-so/logic.ts` | Implementation thuật toán hiện tại (index.ts chỉ serve) |
+| `supabase/functions/calculate-la-so/tests/README.md` | Golden tests — quy trình sửa thuật toán an toàn |
 | `supabase/functions/send-nhat-van/index.ts` | Nhật Vận email engine |
 | `docs/demo_laso_tuvi.html` | Prototype gốc (chỉ đọc khi verify edge case) |
-| `tuvidaihongviet/src/components/LaSoSection.tsx` | UI hiển thị lá số + selector |
+| `tuvidaihongviet/src/components/LaSoSection.tsx` | UI hiển thị lá số + selector + xuất Tải lá số/In lá số |
 | `docs/email_templates.md` | Nội dung email templates |
 | `supabase/migrations/20260628000006_inquiries.sql` → `...009_inquiry_category.sql` | Schema + RLS hệ thống Tư Vấn/Hỗ Trợ (chat 2 chiều) |
 | `tuvidaihongviet/src/routes/tai-khoan.tsx` | Customer Portal — tab Tư Vấn/Hỗ Trợ (`SupportTab`) |
