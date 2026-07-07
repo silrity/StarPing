@@ -208,6 +208,7 @@ hoặc tài chính.
 - **Golden tests bắt buộc:** trước mỗi lần deploy `calculate-la-so`, chạy `deno test --allow-read tests/` từ thư mục function. Sửa thuật toán có chủ đích → regen golden + Master duyệt diff (quy trình: `tests/README.md`)
 - Frontend chỉ: nhận input → gọi API → render output
 - RLS (Row-Level Security) bắt buộc trên mọi bảng Supabase
+- **RLS pattern chuẩn (live từ 01/07/2026):** `coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') IN (...)` — KHÔNG dùng subquery `EXISTS` vào `users` (gây đệ quy). ⚠️ Migration files 001–003 vẫn là pattern cũ, live DB đã khác — trạng thái thật của live: `supabase/schema_live_snapshot.sql` (chụp 07/07/2026). Drift chi tiết: `Enhancement.md` mục 15.
 - **Xuất ảnh lá số (PNG):** dùng `modern-screenshot` (`domToPng`), KHÔNG dùng `html-to-image` — thư viện cũ bị bug cắt mất cột phải khi chụp DOM lá số (quá nhiều CSS property/element khiến SVG trung gian phình to, rasterize thiếu), đã thay hẳn ở `LaSoSection.tsx` (07/2026)
 
 ---
@@ -215,6 +216,7 @@ hoặc tài chính.
 ## 7. DATABASE SCHEMA (Supabase PostgreSQL)
 
 > **Lưu ý kiến trúc:** Supabase quản lý `auth.users`. ĐVTT dùng **`public.users`** (1-1 FK với `auth.users`, KHÔNG phải `public.profiles` như tên gọi cũ ở vài chỗ tài liệu) để lưu dữ liệu mở rộng — KHÔNG tạo lại bảng users thủ công.
+> ⚠️ Bảng `public.profiles` LEGACY **vẫn tồn tại trên live DB** (chưa drop, không được ghi nữa) — thấy nó trong query/dump thì đừng nhầm là bảng đang dùng. Kế hoạch dọn: `Enhancement.md` mục 15a.
 >
 > **⚠️ Tạo tài khoản nội bộ (staff) — 2 bước bắt buộc, hay bị quên:**
 > 1. Insert/update row trong `public.users` với `role` đúng (`admin`/`van_hanh`/`tu_van_vien`).
@@ -621,7 +623,7 @@ Giai đoạn MVP: chỉ user được whitelist mới đăng ký được.
 - Password: Supabase Auth quản lý (bcrypt)
 - Rate limiting: Supabase Auth built-in
 - JWT session: 7 ngày (cấu hình trong Supabase Dashboard)
-- Role trong JWT: custom claim `user_role` từ `custom_access_token_hook`
+- Role trong JWT: đọc từ `session.user.app_metadata.role` (= `auth.users.raw_app_meta_data`) — RLS và IOT đều dùng nguồn này. ⚠️ KHÔNG dùng claim `user_role` từ `custom_access_token_hook`: hook đó trên live đang đọc bảng `profiles` LEGACY (không được ghi nữa) → claim luôn sai cho user mới. Cần sửa hook hoặc gỡ (Enhancement.md mục 15b)
 - PDPA compliance: Nghị định 13/2023/NĐ-CP
 - Bát Tự lưu trong `user_profiles` — chỉ owner + staff đọc được (RLS)
 - User có quyền yêu cầu xóa toàn bộ dữ liệu
