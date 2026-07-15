@@ -1,13 +1,11 @@
-# RESUME PROMPT — StarPing session 07/07/2026
+# RESUME PROMPT — StarPing session 15/07/2026
 
 > Paste đoạn dưới vào Claude Code khi mở máy lại.
 
 ---
 
 ```
-Tiếp tục STARPING từ session 07/07/2026.
-
-Model: Claude Fable 5 (claude-fable-5) — Bang đã đổi mặc định giữa session 07/07.
+Tiếp tục STARPING từ session 15/07/2026.
 
 ═══════════════════════════════════════
 STATE HIỆN TẠI
@@ -17,124 +15,146 @@ Supabase project: gqmjuzpwfpnvlpodqckt
 Lovable app URL: https://tuvidaihongviet.lovable.app
 Lovable repo: https://github.com/silrity/tuvidaihongviet.git (clone tại C:/Users/BGN/Documents/GitHub/tuvidaihongviet)
 Backend repo: https://github.com/silrity/StarPing.git
-WHITELIST_ENABLED = 'false' (open registration)
 
-ACCOUNTS NỘI BỘ:
-- ted.bgn@gmail.com — role=admin (public.users + auth.users app_metadata)
-- admin@daihongviet.com — role=admin (public.users + auth.users app_metadata)
+Commit mới nhất:
+- StarPing: ca0d776 "feat: quan ly nhan vien va bat tu khach hang qua IOT"
+- tuvidaihongviet: a919d40 "feat: Customer Portal - tab Tu Van len dau + giao dien tach doi"
 
-DENO: 2.9.1 đã cài qua winget (07/07). Shell mới gọi `deno` trực tiếp.
-Shell không nhận PATH: /c/Users/BGN/AppData/Local/Microsoft/WinGet/Packages/DenoLand.Deno_Microsoft.Winget.Source_8wekyb3d8bbwe/deno.exe
-
-═══════════════════════════════════════
-SESSION 07/07 ĐÃ HOÀN THÀNH
-═══════════════════════════════════════
-
-FRONTEND (tuvidaihongviet — đã push):
-✅ Commit fa4e259: Bỏ nút "Đăng ký nhận Nhật Vận" ở #la-so, thay bằng 2 nút:
-   - "Tải lá số" → xuất .md đầy đủ (Tứ Trụ + Cục + Mệnh/Thân + 12 cung, WYSIWYG theo toggle lưu tháng)
-   - "In lá số" → xuất .png (toàn khung chart + chú thích, loại Phi Tinh toolbar
-     qua data-export-exclude + filter)
-✅ Commit f8565c4: Fix PNG bị cắt cột phải — THAY html-to-image BẰNG modern-screenshot
-   (domToPng, scale: 2). html-to-image bug với DOM phức tạp (SVG trung gian >15MB,
-   rasterize thiếu). KHÔNG quay lại html-to-image.
-   → package.json: modern-screenshot ^4.7.0 (bun.lock sẽ tự update khi Lovable build)
-
-BACKEND (StarPing — đã push):
-✅ Commit b49e95f: GOLDEN TESTS cho thuật toán an sao
-   - Tách calculate-la-so/index.ts (742 dòng) → index.ts (chỉ serve) + logic.ts (thuật toán)
-   - 23 golden cases tại calculate-la-so/tests/ (cases.ts + golden/*.json):
-     giờ Tý/Ngọ (Thân trùng Mệnh), cặp nam/nữ, Mệnh VCD, trước/sau Tết 2006,
-     tháng nhuận 2004, đủ 10 can Tứ Hóa, biên 1925/2008, lưu tháng + đổi năm xem
-   - Chạy: cd supabase/functions/calculate-la-so && deno test --allow-read tests/
-   - BẮT BUỘC chạy trước mỗi lần deploy calculate-la-so
-   - Quy trình sửa thuật toán: sửa logic.ts → test đỏ → regen.ts → git diff golden/
-     → Master duyệt → commit. Chi tiết: tests/README.md
-   - Test đã verify: 23/23 xanh + bắt được lỗi giả lập với output tiếng Việt dễ đọc
-   - Commit này GỒM CẢ 2 thay đổi thuật toán từ phiên trước chưa commit:
-     fix sunLong PI/6 + thêm sao Quốc Ấn + Thiên Trù
-✅ Enhancement.md (root repo): KẾT QUẢ CODE REVIEW 14 mục — đọc file này trước khi
-   làm bảo mật/nghiệp vụ. Tóm tắt mức nghiêm trọng:
-   🔴 #1 users self-update không WITH CHECK → customer tự set role='admin'
-   🔴 #2 .or() filter injection ở register + check-whitelist → bypass whitelist
-   🔴 #3 sepay-webhook fail-open khi SEPAY_WEBHOOK_SECRET chưa set
-   🟠 #5 webhook không set paid_until → sub active vô thời hạn
-   🟠 #6 send-nhat-van gửi trùng khi chạy lại cùng ngày
-   🟠 #7 register không atomic → auth user mồ côi
-   🟠 #8 customer_code có trong spec nhưng KHÔNG có trong migration nào
-   ✅ ĐÃ KIỂM TRA LIVE DB (07/07, dump 46 policies qua supabase db dump):
-   - Live ĐÃ dùng JWT app_metadata toàn bộ → #13 xong trên live, chỉ còn sync repo
-   - #1 hạ 🔴→🟠: đổi users.role không leo thang RLS nữa, nhưng vẫn tự set được
-     email_verified=true (bypass verify) → vẫn cần fix bằng column grants
-   - #4 (audit_log insert authenticated) còn nguyên trên live
-   - Snapshot live: supabase/schema_live_snapshot.sql
-   - DRIFT MỚI (Enhancement.md mục 15): bảng profiles LEGACY còn sống trên live;
-     custom_access_token_hook đọc profiles legacy (claim user_role sai cho user mới,
-     may là không policy nào dùng); 2 cặp policy trùng; 2 bộ trigger updated_at trùng;
-     system_config đọc được bởi mọi authenticated; tu_van_vien mất quyền đọc payments
-     (khác CLAUDE.md §12); customer_code chỉ có trên profiles legacy
-✅ CLAUDE.md cập nhật: cấu trúc calculate-la-so mới, quy tắc golden tests,
-   quy tắc dùng modern-screenshot, nút xuất lá số trong LaSoSection
+Supabase CLI đã link project — `supabase db push` / `supabase functions deploy <name>`
+chạy được thẳng, không cần Docker (chỉ `supabase db dump` mới cần Docker).
 
 ═══════════════════════════════════════
-VIỆC CẦN LÀM TIẾP (theo thứ tự)
+SESSION 15/07 ĐÃ HOÀN THÀNH
 ═══════════════════════════════════════
 
-BƯỚC 1 — XUẤT PNG 23 LÁ GỬI MASTER DUYỆT (đã thống nhất cách làm, chưa chạy)
-   → Gấu tự động hóa bằng Playwright (scratchpad pw-test đã có harness):
-     nhập từng case từ cases.ts vào web local → bấm "In lá số" → gom PNG
-     vào folder để Bang gửi Master
-   → Ưu tiên duyệt 5 lá: 016-can-canh (Tứ Hóa can Canh tranh cãi giữa các phái),
-     008-thang-nhuan, 006/007 (Tết), 001 (giờ Tý)
-   → Master duyệt lá nào → đổi verified: true trong cases.ts lá đó
-   → Song song: xin Master 3-5 lá đã lập tay thật (giá trị xác nhận cao hơn)
-     → thêm case mới
+IOT — "Hỗ Trợ & Tư Vấn" (tuvidaihongviet/src/routes/iot.ho-tro.tsx):
+✅ Tách 2 tab "Tickets" / "Ban Tư Vấn" (component mới ConsultantTeamTab.tsx):
+   - Badge "Tickets" = số ticket category=tu_van chưa gán (không tính tai_khoan_thanh_toan,
+     loại này vốn không bao giờ gán cho tư vấn viên)
+   - Badge "Ban Tư Vấn" = số tư vấn viên đang Hoạt động mà chưa có khách/ticket nào
+   - Bảng Ban Tư Vấn: tên, trạng thái (dropdown sửa trực tiếp), khách đang hỗ trợ,
+     ticket đang hỗ trợ, ngày gán gần nhất
+   - Bỏ 3 nút lọc category (Tất cả loại/Tư Vấn/Tài khoản) khỏi tab Tickets — nhãn
+     category vẫn hiện trên từng dòng ticket, chỉ bỏ phần filter theo yêu cầu Bang
+   - Dropdown gán tư vấn viên: ẩn hẳn người "Nghỉ dài hạn", vẫn hiện "Tạm nghỉ"
+     kèm nhãn (Tạm nghỉ)
+✅ Migration 20260715000010_consultant_status.sql (đã apply live):
+   - Cột users.consultant_status: 'hoat_dong'|'tam_nghi'|'nghi_dai_han' (default hoat_dong)
+   - RLS mới: van_hanh được sửa consultant_status (trước đó live chỉ admin ghi được users
+     qua p_admin_write — van_hanh không có quyền, phải thêm policy riêng scope theo
+     role='tu_van_vien' để không mở rộng quyền ghi bừa bãi)
+   - View consultant_workload thêm consultant_status + last_assigned_at (subquery
+     MAX(created_at) từ inquiry_assignments where action='assigned')
+   - LƯU Ý: CREATE OR REPLACE VIEW không cho đổi thứ tự cột — cột mới phải thêm
+     ở CUỐI SELECT, không chèn giữa
 
-BƯỚC 2 — FIX BẢO MẬT 🔴 (Enhancement.md #1 #2 #3, ~nửa ngày)
-   → NHỚ kiểm tra live DB policies trước (xem lưu ý trên)
+IOT — "Nhân Viên" (đổi tên từ "Nội Bộ", tuvidaihongviet/src/routes/iot.noi-bo.tsx):
+✅ Icon pencil cho admin: sửa tên/role/email đăng nhập/password nhân viên khác
+✅ Admin KHÔNG tự sửa được chính mình qua đây (icon ẩn ở dòng của mình) — tránh
+   tự khóa/tự hạ quyền; sửa chính mình vẫn phải qua Supabase Dashboard
+✅ Backend mới: Edge Function admin-update-staff (đã deploy)
+   - Xác thực caller qua auth.getUser() (forward Authorization header) rồi check
+     app_metadata.role === 'admin'
+   - Đổi role: cập nhật ĐỒNG THỜI auth.users.app_metadata (qua admin.auth.admin.
+     updateUserById) VÀ public.users.role — 2 nơi này không tự đồng bộ (xem CLAUDE.md §7)
+   - Đổi email/password: qua Supabase Admin API (service role), không thể làm
+     từ client trực tiếp
 
-BƯỚC 3 — FIX NGHIỆP VỤ 🟠 (#5 #6 #7 #8, ~1 ngày)
+IOT — "Khách Hàng" (tuvidaihongviet/src/routes/iot.khach-hang.tsx):
+✅ Đổi cột "Zalo" → "SĐT", nút "Xem" → icon 👁, thêm icon ✏️ (chỉ admin) mở modal sửa
+✅ Cột mới "Tickets" (đếm ticket open/in_progress của khách) và "Giới tính"
+✅ Modal edit: Tên + SĐT (ghi thẳng bảng users qua RLS p_admin_write) + nhóm
+   "Bát tự" (Giới tính + Ngày/Tháng/Năm/Giờ sinh) → gọi Edge Function riêng
+✅ Backend mới: Edge Function admin-update-birth-data (đã deploy 3 lần, xem bug bên dưới)
+   - Nhận birth_day/month/year/hour_chi + gender, validate, upsert vào user_profiles,
+     rồi TÍNH LẠI TOÀN BỘ user_charts (dùng chung logic.ts với calculate-la-so, import
+     trực tiếp — không gọi HTTP self-call) — vì user_charts là cache, đổi bát tự mà
+     không tính lại sẽ để lại lá số cũ sai
+   - user_profiles/user_charts không có RLS UPDATE cho admin (chỉ chủ sở hữu ghi được /
+     staff chỉ SELECT) → bắt buộc chạy qua service role trong Edge Function
 
-BƯỚC 4 — CÁC VIỆC TREO TỪ SESSION TRƯỚC (chưa rõ trạng thái, cần Bang confirm):
-   - Quyết định business model: giữ/bỏ Daily Nhật Vận, Advisory Packages
-     (chi tiết trong RESUME 01/07, Bang nói "sẽ hồi đáp sau")
-   - SePay: đăng ký my.sepay.vn merchant account
-   - Verify lá số 7/5/1984 giờ Mùi Nữ (tháng 4 ÂL) + xác nhận Thầy can giờ Ất/Tân Mùi
-   - IOT E2 Customer Detail: apply Lovable_E2_Fix_Navigate.md + test navigate
+BUG ĐàTÌM & SỬA (quan trọng, dễ tái phát ở chỗ khác):
+1. Ambiguous FK embed: inquiries có 2 FK trỏ vào users (customer_id VÀ assigned_to).
+   Viết `inquiries(status)` trong .select() làm PostgREST không biết join theo cột
+   nào → query lỗi ÂM THẦM (không throw, chỉ trả rỗng). Fix: `inquiries!customer_id(status)`.
+   → Nếu sau này embed lỗi mà không có error rõ ràng, nghi ngờ FK ambiguous trước.
+2. `.update()` trên bảng KHÔNG CÓ row sẵn (VD user_profiles của khách thiếu hồ sơ)
+   khớp 0 dòng và KHÔNG BÁO LỖI (đúng ngữ nghĩa SQL) → tưởng đã lưu nhưng thực ra
+   không có gì thay đổi. Fix: dùng `.upsert(..., { onConflict: 'user_id' })` thay
+   vì `.update()` bất cứ khi nào bảng đích có thể không có row từ trước.
+3. supabase-js `functions.invoke()` khi Edge Function trả lỗi (400+) chỉ báo
+   "Edge Function returned a non-2xx status code" — message thật nằm trong
+   `error.context` (Response gốc), phải `await error.context.json()` mới đọc được.
+   → Đã tạo helper dùng chung: tuvidaihongviet/src/lib/edgeFunctionError.ts
+   (`edgeFunctionErrorMessage(error)`), áp dụng ở iot.noi-bo.tsx + iot.khach-hang.tsx.
+   NÊN DÙNG helper này ở MỌI invoke() mới trong tương lai, đừng chỉ throw error.message.
+
+Customer Portal (tuvidaihongviet/src/routes/tai-khoan.tsx):
+✅ Tab "Tư Vấn" chuyển lên đầu tiên + làm mặc định (trước đó default là "Hồ Sơ")
+✅ Chưa có ticket nào (chỉ tab Tư Vấn): hero + CTA "Đặt câu hỏi đầu tiên" thay
+   khối trống cũ (tab Hỗ Trợ vẫn giữ khối trống cũ, không đổi)
+✅ Đã có ticket: desktop (≥768px) hiện giao diện tách đôi kiểu Tickets IOT (danh
+   sách trái/nội dung phải, dòng đang chọn tô sáng); mobile (<768px) giữ nguyên
+   kiểu cũ list→bấm→toàn màn hình — dùng Tailwind `md:hidden` / `hidden md:flex`
+   để render cả 2 layout cùng lúc, không cần JS detect kích thước màn hình
+✅ Fix bug type có sẵn: state tab thiếu "tuvan" trong union type (so sánh vô nghĩa,
+   tsc đã cảnh báo từ trước session này)
+
+⚠️ CHƯA XÁC NHẬN: Bang chưa duyệt mắt phần Customer Portal split-view (câu hỏi
+   làm rõ về phạm vi/mobile-behavior bị timeout, Gấu tự chọn phương án đề xuất
+   và làm luôn). Cần mở localhost:8080/tai-khoan duyệt cả desktop lẫn thu nhỏ
+   cửa sổ trước khi coi là xong hẳn.
 
 ═══════════════════════════════════════
-GHI CHÚ KỸ THUẬT QUAN TRỌNG
+VIỆC CẦN LÀM TIẾP / CHƯA RÕ TRẠNG THÁI
+═══════════════════════════════════════
+
+- Bang duyệt UI Customer Portal (tab Tư Vấn mặc định + split view) — xem trên
+  cả desktop và mobile viewport
+- Enhancement.md (từ session 07/07) vẫn còn nhiều mục 🔴🟠 CHƯA fix (bảo mật +
+  nghiệp vụ) — không đụng tới trong session này, xem file gốc để tiếp tục
+- StarPing repo có RẤT NHIỀU file untracked/modified TỪ TRƯỚC session này
+  (docs/domainKnowledge/*, Images/, src/, package-lock.json, README.md sửa,
+  docs/product/live-payments-design-system-FINAL.md đã xóa, 5 migration file cũ
+  001-005 hiện thành "??" dù đã có từ lâu...) — CHƯA commit vì không thuộc phạm
+  vi các task được giao, để Bang tự quyết định. ĐỪNG git add -A/. bừa — luôn hỏi
+  hoặc chỉ add đúng file liên quan tới task đang làm.
+- Chưa test lại: liệu bug #2 (update 0-row) có ảnh hưởng chỗ nào khác ngoài
+  admin-update-birth-data không (VD: bất kỳ chỗ nào khác dùng .update() vào bảng
+  có thể thiếu row) — chưa rà soát toàn bộ, chỉ mới phát hiện qua báo lỗi cụ thể
+
+═══════════════════════════════════════
+GHI CHÚ KỸ THUẬT QUAN TRỌNG (kế thừa từ session trước + mới)
 ═══════════════════════════════════════
 
 GOLDEN TESTS:
   cd supabase/functions/calculate-la-so && deno test --allow-read tests/
   Regen (chỉ khi đổi thuật toán có chủ đích): deno run --allow-read --allow-write tests/regen.ts
-  `deno check` sinh supabase/functions/deno.lock → xóa trước khi commit nếu không chủ đích
+  23/23 case đã Bang xác nhận đúng (07/07/2026)
 
 XUẤT PNG LÁ SỐ: modern-screenshot (domToPng), KHÔNG dùng html-to-image (bug cắt cột phải)
 
+EDGE FUNCTIONS mới có service-role + xác thực caller (mẫu chuẩn để copy):
+  1. Tạo client với ANON_KEY + forward Authorization header → .auth.getUser() lấy caller
+  2. Check caller.app_metadata.role
+  3. Tạo client riêng với SERVICE_ROLE_KEY cho phần ghi dữ liệu thật
+  Xem admin-update-staff/index.ts hoặc admin-update-birth-data/index.ts làm mẫu.
+
 DEV LOCAL tuvidaihongviet:
-  npm run dev → localhost:8080. Lockfile thật là bun.lock —
-  npm install sinh package-lock.json → PHẢI XÓA trước khi commit.
-  routeTree.gen.ts bị dev server regen → git checkout -- trước khi commit.
-  Kill dev server: tasklist //FI "IMAGENAME eq node.exe" → taskkill //PID <pid> //F
-  (PID từ ps aux của Git Bash là PID ảo MSYS, không dùng được)
+  npm run dev → localhost:8080. Poll port bằng curl thay vì sleep cố định.
+  Kill: Get-CimInstance Win32_Process -Filter "Name='node.exe'" | chọn đúng PID
+  (npm run dev + vite con), Stop-Process -Force. (PowerShell CIM cho command line
+  đầy đủ để nhận diện đúng process, tránh nhầm PID ảo MSYS của Git Bash ps aux.)
+  ⚠️ Local KHÔNG có DB riêng — gắn thẳng Supabase production.
 
-BROWSER TEST: Playwright trong scratchpad (không cài vào repo),
-  chromium.launch({ channel: "msedge", headless: true }) dùng Edge có sẵn.
-  TanStack Start cần chờ networkidle + ~1.5s hydration trước khi click submit.
-
-BACKEND calculate-la-so:
-  Thuật toán ở logic.ts (index.ts chỉ serve). Response có _lunar: {d,m,y,leap}
-  (field ngắn). sunLong dùng fl(r/(PI/6)).
-
-RLS PATTERN CHUẨN (theo session 01/07):
+RLS PATTERN CHUẨN:
   coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') IN ('admin', 'van_hanh')
   KHÔNG dùng subquery EXISTS vào users → recursive.
-  Migration files trong repo CHƯA phản ánh pattern này — cần đối chiếu live DB.
 
-JWT role set bằng SQL:
+JWT role set bằng SQL (khi cần set tay, không qua UI):
   UPDATE auth.users SET raw_app_meta_data = raw_app_meta_data || '{"role": "admin"}'::jsonb
   WHERE email = '...';
-  Sau đó user phải đăng nhập lại.
+  Sau đó user phải đăng nhập lại (session cũ không tự refresh claim).
+
+CREATE OR REPLACE VIEW: không đổi được thứ tự cột đã có — cột mới luôn thêm ở CUỐI.
 ```
