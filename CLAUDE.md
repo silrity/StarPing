@@ -119,7 +119,7 @@ StarPing/                              ← Repo backend + docs
 tuvidaihongviet/                       ← Repo frontend (Lovable)
 └── src/
     ├── components/
-    │   ├── LaSoSection.tsx            ← ⭐ Hiển thị lá số + selector năm/tháng xem + xuất Tải lá số (.md)/In lá số (.png, `modern-screenshot`)
+    │   ├── LaSoSection.tsx            ← ⭐ Hiển thị lá số + xuất Tải lá số (.md)/In lá số (.png, `modern-screenshot`) — export `LaSoGrid`/`getCurrentLunarMonth` dùng lại ở nơi khác cần hiển thị lá số. `LaSoGrid` tự vẽ nút chuyển năm/tháng xem (`QuickStepper` nội bộ) qua props `onChangeViewYear`/`onChangeViewMonth` — nơi gọi chỉ cần truyền callback set state, KHÔNG tự vẽ nút mũi tên riêng (từng có bug 2 bộ nút trùng nhau do nơi gọi chưa wire callback, đã dọn 07/2026)
     │   └── ...
     ├── lib/
     │   ├── supabase.ts                ← Client Customer Portal (KHÔNG hardcode global.headers.Authorization!)
@@ -210,6 +210,8 @@ hoặc tài chính.
 - RLS (Row-Level Security) bắt buộc trên mọi bảng Supabase
 - **RLS pattern chuẩn (live từ 01/07/2026):** `coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') IN (...)` — KHÔNG dùng subquery `EXISTS` vào `users` (gây đệ quy). ⚠️ Migration files 001–003 vẫn là pattern cũ, live DB đã khác — trạng thái thật của live: `supabase/schema_live_snapshot.sql` (chụp 07/07/2026). Drift chi tiết: `Enhancement.md` mục 15.
 - **Xuất ảnh lá số (PNG):** dùng `modern-screenshot` (`domToPng`), KHÔNG dùng `html-to-image` — thư viện cũ bị bug cắt mất cột phải khi chụp DOM lá số (quá nhiều CSS property/element khiến SVG trung gian phình to, rasterize thiếu), đã thay hẳn ở `LaSoSection.tsx` (07/2026)
+- **Lưu tinh (Lưu Năm/Lưu Tháng) — Tứ Hóa + sắp xếp tốt/xấu (07/2026):** `anLuuTinh()` trong `logic.ts` tính Tứ Hóa (Lộc/Quyền/Khoa/Kỵ) dùng chung 1 bảng `THL` theo Can cho cả lưu Năm và lưu Tháng (từng có bug chỉ tính cho lưu Năm do bọc nhầm trong `if (isNam)`, đã bỏ). Field `hoa` trên mỗi sao lưu PHẢI được set đúng (`'loc'|'quyen'|'khoa'|'ky'`, không để `null`) — frontend (`LaSoSection.tsx`, hàm `isXau()`) dựa vào field này để xếp Hóa Kỵ lưu vào cột xấu bên phải, giống quy tắc tốt-trái/xấu-phải đang áp dụng cho phụ tinh cố định. Không hiển thị badge chữ tắt (L/Q/K/K) cạnh tên sao lưu — tên sao đã ghi rõ "Hóa Lộc/Quyền/Khoa/Kỵ" nên badge dư thừa.
+- **Local frontend gọi thẳng Edge Function production, không hot-reload theo `logic.ts` local:** sửa thuật toán trong `logic.ts` chỉ có hiệu lực trên `localhost` sau khi `supabase functions deploy calculate-la-so` — vì `tuvidaihongviet/src/lib/supabase.ts` gắn cứng URL production, Edge Function chạy trên hạ tầng Supabase chứ không chạy local. Đừng báo "đã sửa xong, test trên localhost đi" nếu chưa deploy.
 
 ---
 
