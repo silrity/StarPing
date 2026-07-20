@@ -211,7 +211,7 @@
           "name": "L.Năm Hóa Lộc",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "loc"
         },
         {
           "name": "L.Năm Long Đức",
@@ -549,7 +549,7 @@
           "name": "L.Năm Hóa Quyền",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "quyen"
         },
         {
           "name": "L.Năm Trực Phù",
@@ -813,7 +813,7 @@
           "name": "L.Năm Hóa Khoa",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "khoa"
         },
         {
           "name": "L.Năm Tang Môn",
@@ -967,7 +967,7 @@
           "name": "L.Năm Hóa Kỵ",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "ky"
         },
         {
           "name": "L.Năm Quan Phù",

@@ -77,7 +77,7 @@
           "name": "L.Năm Hóa Lộc",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "loc"
         },
         {
           "name": "L.Năm Tuế Phá",
@@ -421,7 +421,7 @@
           "name": "L.Năm Hóa Quyền",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "quyen"
         },
         {
           "name": "L.Năm Điếu Khách",
@@ -905,13 +905,13 @@
           "name": "L.Năm Hóa Khoa",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "khoa"
         },
         {
           "name": "L.Năm Hóa Kỵ",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "ky"
         },
         {
           "name": "L.Năm Thiếu Âm",

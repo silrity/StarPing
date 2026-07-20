@@ -595,9 +595,9 @@ export function calculateLaSo(input: LasoInput) {
     const cat: Star['cat'] = isNam ? 'luu' : 'luu_thang'
     const pre = isNam ? 'L.Năm ' : 'L.Tháng '
 
-    function addL(pos: number, name: string) {
+    function addL(pos: number, name: string, hoa: Star['hoa'] = null) {
       if (pos < 1 || pos > 12) return
-      P[pos].stars.push({ name: pre + name, cat, vuong_miet: null, hoa: null })
+      P[pos].stars.push({ name: pre + name, cat, vuong_miet: null, hoa })
     }
 
     // Theo can lưu
@@ -612,25 +612,25 @@ export function calculateLaSo(input: LasoInput) {
     addL(MAP_KHOI[can], 'Thiên Khôi')
     addL(MAP_VIET[can], 'Thiên Việt')
 
-    if (isNam) {
-      const THL: Record<number,[number,number,number,number]> = {
-        1: [birthPos.ltP,    birthPos.pqP,      birthPos.vkP,       birthPos.tduP],
-        2: [birthPos.tkP,    birthPos.tluP,     birthPos.tvP,       birthPos.taP],
-        3: [birthPos.tdP,    birthPos.tkP,      birthPos.vanXuongP, birthPos.ltP],
-        4: [birthPos.taP,    birthPos.tdP,      birthPos.tkP,       birthPos.cmP],
-        5: [birthPos.tlangP, birthPos.taP,      birthPos.huuBatP,   birthPos.tkP],
-        6: [birthPos.vkP,    birthPos.tlangP,   birthPos.tluP,      birthPos.vanKhucP],
-        7: [birthPos.tduP,   birthPos.vkP,      birthPos.taP,       birthPos.tdP],
-        8: [birthPos.cmP,    birthPos.tduP,     birthPos.vanKhucP,  birthPos.vanXuongP],
-        9: [birthPos.tluP,   birthPos.tvP,      birthPos.tpP,       birthPos.vkP],
-       10: [birthPos.pqP,    birthPos.cmP,      birthPos.taP,       birthPos.tlangP],
-      }
-      const h = THL[can]
-      if (h) {
-        ;['Hóa Lộc','Hóa Quyền','Hóa Khoa','Hóa Kỵ'].forEach((nm, idx) => {
-          if (h[idx]) addL(h[idx], nm)
-        })
-      }
+    // Tứ Hóa lưu — bảng chỉ phụ thuộc Can nên dùng chung cho cả lưu Năm và lưu Tháng
+    const THL: Record<number,[number,number,number,number]> = {
+      1: [birthPos.ltP,    birthPos.pqP,      birthPos.vkP,       birthPos.tduP],
+      2: [birthPos.tkP,    birthPos.tluP,     birthPos.tvP,       birthPos.taP],
+      3: [birthPos.tdP,    birthPos.tkP,      birthPos.vanXuongP, birthPos.ltP],
+      4: [birthPos.taP,    birthPos.tdP,      birthPos.tkP,       birthPos.cmP],
+      5: [birthPos.tlangP, birthPos.taP,      birthPos.huuBatP,   birthPos.tkP],
+      6: [birthPos.vkP,    birthPos.tlangP,   birthPos.tluP,      birthPos.vanKhucP],
+      7: [birthPos.tduP,   birthPos.vkP,      birthPos.taP,       birthPos.tdP],
+      8: [birthPos.cmP,    birthPos.tduP,     birthPos.vanKhucP,  birthPos.vanXuongP],
+      9: [birthPos.tluP,   birthPos.tvP,      birthPos.tpP,       birthPos.vkP],
+     10: [birthPos.pqP,    birthPos.cmP,      birthPos.taP,       birthPos.tlangP],
+    }
+    const h = THL[can]
+    if (h) {
+      const HOA_KEYS: Star['hoa'][] = ['loc', 'quyen', 'khoa', 'ky']
+      ;['Hóa Lộc','Hóa Quyền','Hóa Khoa','Hóa Kỵ'].forEach((nm, idx) => {
+        if (h[idx]) addL(h[idx], nm, HOA_KEYS[idx])
+      })
     }
 
     addL(LUU_HA_MAP[can], 'Lưu Hà')

@@ -249,7 +249,7 @@
           "name": "L.Năm Hóa Lộc",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "loc"
         },
         {
           "name": "L.Năm Bạch Hổ",
@@ -268,6 +268,12 @@
           "cat": "luu_thang",
           "vuong_miet": null,
           "hoa": null
+        },
+        {
+          "name": "L.Tháng Hóa Lộc",
+          "cat": "luu_thang",
+          "vuong_miet": null,
+          "hoa": "loc"
         },
         {
           "name": "L.Tháng Tuế Phá",
@@ -749,7 +755,7 @@
           "name": "L.Năm Hóa Quyền",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "quyen"
         },
         {
           "name": "L.Năm Thái Tuế",
@@ -768,6 +774,12 @@
           "cat": "luu_thang",
           "vuong_miet": null,
           "hoa": null
+        },
+        {
+          "name": "L.Tháng Hóa Quyền",
+          "cat": "luu_thang",
+          "vuong_miet": null,
+          "hoa": "quyen"
         },
         {
           "name": "L.Tháng Điếu Khách",
@@ -1177,7 +1189,7 @@
           "name": "L.Năm Hóa Khoa",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "khoa"
         },
         {
           "name": "L.Năm Quan Phù",
@@ -1196,6 +1208,12 @@
           "cat": "luu_thang",
           "vuong_miet": null,
           "hoa": null
+        },
+        {
+          "name": "L.Tháng Hóa Khoa",
+          "cat": "luu_thang",
+          "vuong_miet": null,
+          "hoa": "khoa"
         },
         {
           "name": "L.Tháng Tang Môn",
@@ -1311,7 +1329,7 @@
           "name": "L.Năm Hóa Kỵ",
           "cat": "luu",
           "vuong_miet": null,
-          "hoa": null
+          "hoa": "ky"
         },
         {
           "name": "L.Năm Tử Phù",
@@ -1330,6 +1348,12 @@
           "cat": "luu_thang",
           "vuong_miet": null,
           "hoa": null
+        },
+        {
+          "name": "L.Tháng Hóa Kỵ",
+          "cat": "luu_thang",
+          "vuong_miet": null,
+          "hoa": "ky"
         },
         {
           "name": "L.Tháng Thiếu Âm",
